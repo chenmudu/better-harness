@@ -14,17 +14,19 @@ host-neutral.
 ## Support levels
 
 Better Harness currently declares ten more complete capability-level host
-adapters, a partial Augment/Auggie session-only adapter, a ZCode session-only
-adapter, plus bounded DSH
+adapters, a partial Augment/Auggie session-only adapter, a ZCode adapter with
+session evidence, configured assets, a minimal native install surface, and a
+read-only CLI plugin lifecycle, plus bounded DSH
 discovery, configured-assets, and session slices.
 Six have verified public Quickstart paths. Pi, Kimi Code, WorkBuddy, and Grok
 are visible as adapter support because their installation and end-to-end
-evidence boundaries differ from that six-host set. DSH has Verified
+evidence boundaries differ from that six-host set. ZCode is adapter support:
+it has no report-rendering route or desktop plugin surface, and its lifecycle
+plans require `zcode` on `PATH`. DSH has Verified
 install/discovery for a qualified runtime/preset boundary plus developer-preview
 configured-assets and session-evidence contracts. It supports shared read-only
 Asset Practices, neutral Harness analysis, Evidence Bundles, and qualified
-portable HTML durable output. ZCode is limited to read-only SQLite session
-evidence and has no install, configured-asset, lifecycle, or report claim. The
+portable HTML durable output. The
 [canonical adapter matrix](https://github.com/QoderAI/better-harness/blob/main/docs/adapters/README.md)
 remains the complete capability-level source of truth.
 
@@ -44,7 +46,7 @@ remains the complete capability-level source of truth.
 | WorkBuddy | Adapter support | Analysis-capable source-local host | None; skills use WorkBuddy-owned paths | Workspace-matching WorkBuddy JSONL transcripts | Self-contained HTML + Markdown |
 | Grok | Adapter support | Analysis-capable source-local host | None; skills use Grok-owned paths | Workspace-matching Grok session dirs (`updates.jsonl`) | Self-contained HTML + Markdown |
 | DeepSeek Harness (DSH) | Verified install/discovery | Qualified headless/base and Web `standard`/`code`/`cordis`; shared read-only analysis over partial configured-assets and session evidence | `.dsh-plugin/cordis.patch.yml` Cordis bundle shell plus the local DSH Cordis policy; no lifecycle shell | DSH JSONL backend session format `0`: raw `.jsonl` and feature-detected `.jsonl.zstd` | Self-contained HTML + Markdown |
-| ZCode | Partial adapter | Session evidence only; no install, configured-asset, lifecycle, or report claim | None | Read-only SQLite sessions from `~/.zcode/cli/db/db.sqlite`; workspace from `session.directory`, soft-deleted sessions excluded, parent/task subagents retained | Session evidence only |
+| ZCode | Adapter support | Read-only sessions, configured assets, and CLI plugin lifecycle; no report route or desktop plugin surface | `.claude-plugin/` (native fallback) | Read-only SQLite sessions from `~/.zcode/cli/db/db.sqlite`; workspace from `session.directory`, soft-deleted sessions excluded, parent/task subagents retained | Session evidence only |
 
 The `@qoder-ai/better-harness` npm package includes all eight plugin metadata
 roots; `.dsh-plugin/` is the DeepSeek Harness Cordis bundle shell, installed by
@@ -75,8 +77,11 @@ native lifecycle contract yet, so lifecycle targets reject them with
 `UNKNOWN_HOST` while their adapter evidence stays available. DSH likewise has
 no lifecycle profile: lifecycle targets reject it with `UNKNOWN_HOST`; its
 manually configured verified discovery and partial session evidence remain
-available. ZCode has no lifecycle profile either: targets reject it with
-`UNKNOWN_HOST`, while its read-only session evidence stays available. The shadow host profiles do not replace the canonical adapter matrix
+available. ZCode declares one CLI marketplace surface: install, update, remove,
+and `plugins list --json` verification are supported native steps. Its plans
+never execute; they are blocked with `HOST_EXECUTABLE_NOT_FOUND` when `zcode`
+is absent from `PATH`, and cannot bind an isolated host home because the ZCode
+CLI has no config-root environment override. The shadow host profiles do not replace the canonical adapter matrix
 while ADR-0002 remains proposed. DSH's verified discovery does not add a
 lifecycle target.
 
@@ -279,9 +284,29 @@ native origin is not `real_user`, and parts with an injected source, never count
 as user turns. Prompts, commands, tool output, and content are excluded by
 default and appear only through the existing local-diagnosis include flags.
 
-ZCode has no install shell, configured-asset inventory, lifecycle target,
-report route, Canvas, Checkup, Studio, or public Quickstart in this repository.
-It is not a verified install claim.
+Configured assets are inventoried read-only through
+`scripts/agent-customize/providers/zcode.mjs`: user `~/.zcode` and `~/.agents`,
+project `.zcode`/`.agents` roots, AGENTS.md, MCP, hooks, subagents, and plugin
+records/contributions. Project config follows ZCode's allowlist; user-only
+fields such as `storage`, `permission`, `network`, and `plugins.dirs` are
+stripped with diagnostics. Project hooks are reported as configured and
+trust-gated, never as trusted; live MCP status, runtime subagents, and
+same-name runtime precedence remain unsupported.
+
+The minimum install surface reuses `.claude-plugin/plugin.json` and
+`.claude-plugin/marketplace.json`. Maintainers can run:
+
+```bash
+zcode plugins marketplace add <path-or-repository> --scope user
+zcode plugins install better-harness@better-harness --scope user
+zcode plugins list --json
+```
+
+The isolated install smoke reported `better-harness@better-harness` version
+`0.7.0-alpha2` with two skills and enabled state. `plugin status/plan/verify
+--host zcode` observe the local install, emit external native steps, and never
+execute them. ZCode still has no report route, Canvas, Checkup, Studio,
+desktop plugin surface, or public Quickstart claim.
 
 ## Capability coverage
 

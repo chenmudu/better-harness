@@ -395,6 +395,41 @@ remain explicit evidence boundaries.
 </TabItem>
 </Tabs>
 
+## ZCode {#zcode}
+
+ZCode's CLI manages plugins through native marketplaces. Register this checkout
+(or the GitHub repository) and install Better Harness at user or project scope:
+
+```bash
+zcode plugins marketplace add <path-or-repository> --scope user
+zcode plugins install better-harness@better-harness --scope user
+```
+
+### Verify installation
+
+```bash
+zcode plugins list --json
+```
+
+The output should include `better-harness@better-harness` with two skills and
+an enabled state. Better Harness reuses `.claude-plugin/plugin.json` and
+`.claude-plugin/marketplace.json`; no `.zcode-plugin` shell is required.
+
+Better Harness can observe the local installation and plan native steps without
+running them:
+
+```bash
+better-harness plugin status --host zcode
+better-harness plugin plan install --host zcode --surface cli --scope user
+better-harness plugin verify --host zcode
+```
+
+Plans require `zcode` on `PATH` and report `HOST_EXECUTABLE_NOT_FOUND`
+otherwise. ZCode configured assets cover `~/.zcode`, `~/.agents`, project
+`.zcode`/`.agents`, AGENTS.md, MCP keys, hooks, subagents, and plugin records.
+Project hooks remain configured/trust-gated, and live MCP status is not
+observed.
+
 ## Next step
 
 Generate [your first report](./your-first-report.md). If installation or

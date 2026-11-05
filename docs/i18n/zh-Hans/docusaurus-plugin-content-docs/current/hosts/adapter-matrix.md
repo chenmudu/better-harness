@@ -14,8 +14,9 @@ Better Harness 运行在你现有的编码智能体内。宿主差异只进入�
 
 Better Harness 当前声明了十个能力层宿主适配器，其中六个已有验证过的公开
 快速开始路径。Pi、Kimi Code、WorkBuddy 与 Grok 以适配器支持展示，因为它们的安装方式和端到端
-证据边界与这六个宿主不同。ZCode 仅提供只读 SQLite 会话证据，不包含安装、已配置资产、
-生命周期或报告声明。完整能力层事实源仍是
+证据边界与这六个宿主不同。ZCode 以适配器支持展示：只读会话证据、已配置资产、
+最小原生安装面和只读 CLI 插件生命周期，但不含报告渲染路由或桌面插件 surface，
+且生命周期 plan 需要 `zcode` 在 `PATH` 上。完整能力层事实源仍是
 [规范适配器矩阵](https://github.com/QoderAI/better-harness/blob/main/docs/adapters/README.md)。
 
 ## 受支持的宿主适配器
@@ -32,7 +33,7 @@ Better Harness 当前声明了十个能力层宿主适配器，其中六个已�
 | Kimi Code | 适配器支持 | 具备分析能力的源码本地宿主 | `.kimi-plugin/plugin.json` | 匹配工作区的 Kimi wire 转录 | 自包含 HTML + Markdown |
 | WorkBuddy | 适配器支持 | 具备分析能力的源码本地宿主 | 无；Skill 使用 WorkBuddy 自有路径 | 匹配工作区的 WorkBuddy JSONL 转录 | 自包含 HTML + Markdown |
 | Grok | 适配器支持 | 具备分析能力的源码本地宿主 | 无；Skill 使用 Grok 自有路径 | 匹配工作区的 Grok 会话目录（`updates.jsonl`） | 自包含 HTML + Markdown |
-| ZCode | 部分适配 | 仅提供会话证据；不包含安装、已配置资产、生命周期或报告声明 | 无 | 来自 `~/.zcode/cli/db/db.sqlite` 的只读 SQLite 会话；工作区取自 `session.directory`，排除软删除会话，保留父/任务子代理关联 | 仅会话证据 |
+| ZCode | 适配器支持 | 只读会话、已配置资产与 CLI 插件生命周期；无报告路由或桌面插件 surface | `.claude-plugin/`（原生 fallback） | 来自 `~/.zcode/cli/db/db.sqlite` 的只读 SQLite 会话；工作区取自 `session.directory`，排除软删除会话，保留父/任务子代理关联 | 仅会话证据 |
 
 `@qoder-ai/better-harness` npm 包含全部七个插件元数据根目录。生成的 Qoder
 运行时 bundle 只包含 Qoder shell。Pi 复用现有 `package.json` 中的安装元数据，
@@ -54,8 +55,11 @@ Cursor 在本机 help 合同过期期间保持安装不可用；Pi 持久化 sur
 证据的操作保持不可用，临时 session surface 的更新/移除不适用；WorkBuddy 返回
 `PLUGIN_LIFECYCLE_UNSUPPORTED`。Kimi Code 与 Grok 尚无经验证的原生生命周期
 合同，因此生命周期目标会以 `UNKNOWN_HOST` 拒绝它们，其适配器证据仍然可用。
-ZCode 同样没有生命周期 profile：生命周期目标会以 `UNKNOWN_HOST` 拒绝它，只读
-会话证据仍然可用。在 ADR-0002 仍为 proposed 期间，shadow host profile 不替代
+ZCode 声明一个 CLI marketplace surface：install、update、remove 与
+`plugins list --json` 验证均为受支持的原生步骤。plan 从不执行；当 `zcode` 不在
+`PATH` 上时以 `HOST_EXECUTABLE_NOT_FOUND` 阻止。ZCode CLI 没有配置根环境变量，
+因此 plan 无法绑定隔离 host home，会明确以 `ISOLATED_HOST_HOME_UNREPRESENTABLE`
+阻止而不是回落真实 home。在 ADR-0002 仍为 proposed 期间，shadow host profile 不替代
 规范适配器矩阵。
 
 ## 输出模式
@@ -127,8 +131,26 @@ ZCode 的 `input_tokens` 已包含缓存读取与缓存创建，因此适配器�
 原生 origin 不是 `real_user` 的消息，以及带注入来源的 part，都不计入用户轮次。
 默认不输出提示词、命令、工具输出和内容，仅在现有本地诊断 include 开关下出现。
 
-ZCode 在本仓库没有安装 Shell、已配置资产清点、生命周期目标、报告路由、
-Canvas、Checkup、Studio 或公开快速开始，也不是 DSH 式的已验证安装声明。
+已配置资产通过 `scripts/agent-customize/providers/zcode.mjs` 只读清点：用户级
+`~/.zcode` 与 `~/.agents`、项目 `.zcode`/`.agents` 根、AGENTS.md、MCP、hooks、
+subagents，以及插件记录与贡献。项目配置按 ZCode 的白名单读取；`storage`、
+`permission`、`network`、`plugins.dirs` 等用户级字段会被剥离并产生诊断。项目 hooks
+只报告 configured/trust-gated，绝不声称已信任；live MCP 状态、运行时 subagents
+与同名运行时优先级仍为 unsupported。
+
+最小安装面复用 `.claude-plugin/plugin.json` 与 `.claude-plugin/marketplace.json`。
+维护者可执行：
+
+```bash
+zcode plugins marketplace add <path-or-repository> --scope user
+zcode plugins install better-harness@better-harness --scope user
+zcode plugins list --json
+```
+
+隔离安装冒烟结果为 `better-harness@better-harness` 版本 `0.7.0-alpha2`，包含两个
+Skill 且为 enabled。`plugin status/plan/verify --host zcode` 只观察本地安装、输出
+外部原生步骤，且从不执行。ZCode 仍没有报告路由、Canvas、Checkup、Studio、
+桌面插件 surface 或公开快速开始声明。
 
 ## 能力覆盖
 

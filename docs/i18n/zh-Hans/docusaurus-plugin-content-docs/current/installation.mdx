@@ -292,6 +292,39 @@ Copilot 不记录逐次响应的 token 用量，VS Code Copilot Chat 也没有�
 </TabItem>
 </Tabs>
 
+## ZCode {#zcode}
+
+ZCode CLI 通过原生 marketplace 管理插件。把本检出目录（或 GitHub 仓库）注册为
+marketplace，并在 user 或 project scope 安装 Better Harness：
+
+```bash
+zcode plugins marketplace add <path-or-repository> --scope user
+zcode plugins install better-harness@better-harness --scope user
+```
+
+### 验证安装
+
+```bash
+zcode plugins list --json
+```
+
+输出中应包含 `better-harness@better-harness`，带两个 Skill 且状态为 enabled。
+Better Harness 复用 `.claude-plugin/plugin.json` 与
+`.claude-plugin/marketplace.json`，不需要额外的 `.zcode-plugin` 壳。
+
+Better Harness 可以观察本地安装并规划原生步骤，但不执行：
+
+```bash
+better-harness plugin status --host zcode
+better-harness plugin plan install --host zcode --surface cli --scope user
+better-harness plugin verify --host zcode
+```
+
+plan 要求 `zcode` 在 `PATH` 上，否则报告 `HOST_EXECUTABLE_NOT_FOUND`。
+ZCode 已配置资产覆盖 `~/.zcode`、`~/.agents`、项目 `.zcode`/`.agents`、
+AGENTS.md、MCP 键名、hooks、subagents 与插件记录。项目 hooks 只报告
+configured/trust-gated，live MCP 状态不在观察范围内。
+
 ## 下一步
 
 生成[你的第一份报告](./your-first-report.md)。如果安装或发现失败，请使用
