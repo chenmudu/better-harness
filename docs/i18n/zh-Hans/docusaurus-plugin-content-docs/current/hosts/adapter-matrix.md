@@ -14,7 +14,8 @@ Better Harness 运行在你现有的编码智能体内。宿主差异只进入�
 
 Better Harness 当前声明了十个能力层宿主适配器，其中六个已有验证过的公开
 快速开始路径。Pi、Kimi Code、WorkBuddy 与 Grok 以适配器支持展示，因为它们的安装方式和端到端
-证据边界与这六个宿主不同。完整能力层事实源仍是
+证据边界与这六个宿主不同。ZCode 仅提供只读 SQLite 会话证据，不包含安装、已配置资产、
+生命周期或报告声明。完整能力层事实源仍是
 [规范适配器矩阵](https://github.com/QoderAI/better-harness/blob/main/docs/adapters/README.md)。
 
 ## 受支持的宿主适配器
@@ -31,6 +32,7 @@ Better Harness 当前声明了十个能力层宿主适配器，其中六个已�
 | Kimi Code | 适配器支持 | 具备分析能力的源码本地宿主 | `.kimi-plugin/plugin.json` | 匹配工作区的 Kimi wire 转录 | 自包含 HTML + Markdown |
 | WorkBuddy | 适配器支持 | 具备分析能力的源码本地宿主 | 无；Skill 使用 WorkBuddy 自有路径 | 匹配工作区的 WorkBuddy JSONL 转录 | 自包含 HTML + Markdown |
 | Grok | 适配器支持 | 具备分析能力的源码本地宿主 | 无；Skill 使用 Grok 自有路径 | 匹配工作区的 Grok 会话目录（`updates.jsonl`） | 自包含 HTML + Markdown |
+| ZCode | 部分适配 | 仅提供会话证据；不包含安装、已配置资产、生命周期或报告声明 | 无 | 来自 `~/.zcode/cli/db/db.sqlite` 的只读 SQLite 会话；工作区取自 `session.directory`，排除软删除会话，保留父/任务子代理关联 | 仅会话证据 |
 
 `@qoder-ai/better-harness` npm 包含全部七个插件元数据根目录。生成的 Qoder
 运行时 bundle 只包含 Qoder shell。Pi 复用现有 `package.json` 中的安装元数据，
@@ -52,7 +54,9 @@ Cursor 在本机 help 合同过期期间保持安装不可用；Pi 持久化 sur
 证据的操作保持不可用，临时 session surface 的更新/移除不适用；WorkBuddy 返回
 `PLUGIN_LIFECYCLE_UNSUPPORTED`。Kimi Code 与 Grok 尚无经验证的原生生命周期
 合同，因此生命周期目标会以 `UNKNOWN_HOST` 拒绝它们，其适配器证据仍然可用。
-在 ADR-0002 仍为 proposed 期间，shadow host profile 不替代规范适配器矩阵。
+ZCode 同样没有生命周期 profile：生命周期目标会以 `UNKNOWN_HOST` 拒绝它，只读
+会话证据仍然可用。在 ADR-0002 仍为 proposed 期间，shadow host profile 不替代
+规范适配器矩阵。
 
 ## 输出模式
 
@@ -109,6 +113,22 @@ Grok 的已配置资产、工作区匹配的会话证据与可移植 HTML 路由
 本仓库不提供 Grok 安装 Shell 或 npm 打包的宿主产物；安装方式是将 Skill 软链到
 `~/.grok/skills/better-harness`（或项目 `.grok/skills`）。在观察到完整交互式
 报告闭环冒烟验证前，Grok 仍不进入已验证快速开始集合。
+
+### ZCode {#zcode}
+
+ZCode 支持刻意限制为本地只读会话证据。`session-analysis --platform zcode`
+读取单个 SQLite 数据库，优先级为 `--zcode-db` > `<--zcode-home>/cli/db/db.sqlite`
+> `~/.zcode/cli/db/db.sqlite`，通过 `node:sqlite` 以只读模式打开并设置
+`PRAGMA query_only = ON`。发现阶段排除软删除会话（`time_deleted`），工作区
+只从 `session.directory` 判定，并保留 `parent_id`/`task_type` 子代理关联。
+一次模型请求保留原生 `logical_request_id@attempt_index` 身份，使重试保持独立。
+ZCode 的 `input_tokens` 已包含缓存读取与缓存创建，因此适配器单独报告未缓存
+输入，并设置 `cacheAccountingMode: separate-input-lane`，不会重复累加缓存 lane。
+原生 origin 不是 `real_user` 的消息，以及带注入来源的 part，都不计入用户轮次。
+默认不输出提示词、命令、工具输出和内容，仅在现有本地诊断 include 开关下出现。
+
+ZCode 在本仓库没有安装 Shell、已配置资产清点、生命周期目标、报告路由、
+Canvas、Checkup、Studio 或公开快速开始，也不是 DSH 式的已验证安装声明。
 
 ## 能力覆盖
 

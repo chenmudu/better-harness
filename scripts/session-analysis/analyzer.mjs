@@ -58,6 +58,8 @@ Options:
   --workbuddy-home <dir>    WorkBuddy data root (default: ~/.workbuddy)
   --grok-home <dir>         Grok CLI data root (default: ~/.grok or $GROK_HOME)
   --dsh-home <dir>          DeepSeek Harness data root (default: ~/.dsh or $DSH_HOME)
+  --zcode-home <dir>        ZCode data root (default: ~/.zcode)
+  --zcode-db <file>         ZCode SQLite session database (default: <home>/cli/db/db.sqlite)
   --include-cache           Include optional Qoder cache evidence
   --include-global-capabilities
                             Include optional user-global Qoder evidence
@@ -262,6 +264,7 @@ const PLATFORM_MODULES = Object.freeze({
   workbuddy: { load: () => import("./platforms/workbuddy.mjs"), analyzer: "WorkbuddySessionAnalyzer" },
   grok: { load: () => import("./platforms/grok.mjs"), analyzer: "GrokSessionAnalyzer" },
   dsh: { load: () => import("./platforms/dsh.mjs"), analyzer: "DshSessionAnalyzer" },
+  zcode: { load: () => import("./platforms/zcode.mjs"), analyzer: "ZcodeSessionAnalyzer" },
   "harness-run": { load: () => import("./platforms/harness-run.mjs"), analyzer: "HarnessRunSessionAnalyzer" },
 });
 
@@ -341,7 +344,7 @@ export async function main(argv = process.argv.slice(2), dependencies = {}) {
       ...eventOptions,
       ...claudeOptions,
       "",
-      "Options: --augment-home <dir> overrides the Augment/Auggie data root (default: ~/.augment); --kimi-home <dir> overrides the Kimi Code data root (default: ~/.kimi-code); --workbuddy-home <dir> overrides the WorkBuddy data root (default: ~/.workbuddy); --grok-home <dir> overrides the Grok data root (default: ~/.grok or $GROK_HOME); --dsh-home <dir> overrides the DeepSeek Harness data root (default: ~/.dsh or $DSH_HOME).",
+      "Options: --augment-home <dir> overrides the Augment/Auggie data root (default: ~/.augment); --kimi-home <dir> overrides the Kimi Code data root (default: ~/.kimi-code); --workbuddy-home <dir> overrides the WorkBuddy data root (default: ~/.workbuddy); --grok-home <dir> overrides the Grok data root (default: ~/.grok or $GROK_HOME); --dsh-home <dir> overrides the DeepSeek Harness data root (default: ~/.dsh or $DSH_HOME); --zcode-home <dir> overrides the ZCode data root (default: ~/.zcode); --zcode-db <file> overrides the ZCode SQLite session database (default: <home>/cli/db/db.sqlite).",
       "",
       "Use facts --debug only for local diagnosis; it exposes raw session ids and must not be passed to report agents.",
     ].join("\n") + "\n");

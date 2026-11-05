@@ -1,7 +1,7 @@
 # Host Adapter Matrix
 
 This is the single entry point for Claude Code, Augment/Auggie, Codex, Qoder,
-Cursor, Qwen, GitHub Copilot, Pi, Kimi Code, WorkBuddy, and Grok host
+Cursor, Qwen, GitHub Copilot, Pi, Kimi Code, WorkBuddy, Grok, and ZCode host
 boundaries, plus the
 DeepSeek Harness (DSH) verified install/discovery, developer-preview
 configured-assets, session, Asset Practices, neutral Harness analysis, and
@@ -9,8 +9,8 @@ Evidence Bundle slices, plus qualified portable HTML report rendering. Do not
 create `docs/adapters/claude-code.md`, `docs/adapters/codex.md`,
 `docs/adapters/qoder.md`, `docs/adapters/cursor.md`, `docs/adapters/qwen.md`,
 `docs/adapters/copilot.md`, `docs/adapters/pi.md`,
-`docs/adapters/kimi-code.md`, `docs/adapters/workbuddy.md`, or
-`docs/adapters/grok.md` by default.
+`docs/adapters/kimi-code.md`, `docs/adapters/workbuddy.md`,
+`docs/adapters/grok.md`, or `docs/adapters/zcode.md` by default.
 
 Adding another host? Follow
 [Contributing a New Coding Agent Host](contributing-new-coding-agent.md) before
@@ -49,6 +49,7 @@ project `.kimi-code/skills/`), then runs `/skill:better-harness`.
 | WorkBuddy | Analysis-capable source-local host | none (skills install into `~/.workbuddy/skills`) | `scripts/agent-customize/providers/workbuddy.mjs` | `scripts/session-analysis/platforms/workbuddy.mjs` | self-contained HTML + Markdown | `~/.workbuddy` `AGENTS.md` + identity files + `.agents` + `AGENTS.md` | `session-analysis --platform workbuddy sources` -> validated `html` render |
 | Grok | Analysis-capable source-local host | none (skills install into `~/.grok/skills`) | `scripts/agent-customize/providers/grok.mjs` | `scripts/session-analysis/platforms/grok.mjs` | self-contained HTML + Markdown | `~/.grok` + `.grok` + `.agents` + `AGENTS.md` | `session-analysis --platform grok sources` -> skill symlink -> validated `html` render |
 | DeepSeek Harness (DSH) | Verified install/discovery for headless/base and Web `standard`/`code`/`cordis`; shared read-only analysis over developer-preview configured and Session evidence | `.dsh-plugin/cordis.patch.yml` host shell (one Cordis bundle row naming `scripts/dsh-skill-discovery/bundle.mjs`, which loads the local policy at `scripts/dsh-skill-discovery/index.mjs`); no lifecycle shell | `scripts/agent-customize/providers/dsh.mjs`; filesystem Skills and cwd-sensitive Instructions, configured-not-observed | `scripts/session-analysis/platforms/dsh.mjs`; `dsh-v1` for the audited format-0 session-evidence slice from DSH `dsh-v0.1.0-rc.7` and `dsh-v0.1.0-rc.8`, raw `.jsonl` and feature-detected `.jsonl.zstd` | self-contained HTML + Markdown | canonical Skill from the complete root; model Skill calls rejected | `dsh plugin --profile <name> add @qoder-ai/better-harness` -> `npm run test:dsh-bundle`; `npm run test:dsh-native`; `npm run test:dsh-configured-assets-native`; validated portable `html` render and native output-root inertness |
+| ZCode | Session-evidence-only adapter | none | unavailable | `scripts/session-analysis/platforms/zcode.mjs`; `zcode-v1` read-only SQLite evidence from `~/.zcode/cli/db/db.sqlite`; workspace from `session.directory`, soft-deleted sessions excluded, parent/task subagents retained | Session evidence only | unavailable; no Skill or prompt discovery claim | `session-analysis --platform zcode sources` -> `sessions` -> `facts` |
 
 ## Read-only Plugin Lifecycle
 
@@ -85,12 +86,13 @@ Plans never execute and always preserve native surface differences:
 | Pi CLI / CLI session | Persistent user/project install guidance and inventory; separate `pi -e` session-only activation whose update/remove operations are not applicable |
 | WorkBuddy | `PLUGIN_LIFECYCLE_UNSUPPORTED`; adapter evidence remains available |
 
-Kimi Code, Grok, and DSH are absent from this table on purpose: none has a
-validated native lifecycle contract yet, so lifecycle targets reject them with
+Kimi Code, Grok, DSH, and ZCode are absent from this table on purpose: none has
+a validated native lifecycle contract yet, so lifecycle targets reject them with
 `UNKNOWN_HOST` instead of borrowing another host's install route. Kimi Code and
 Grok retain their configured-asset and session evidence. DSH retains its
 bounded verified discovery, configured-assets, and partial session-evidence
-slices, but has no lifecycle profile or native lifecycle claim.
+slices, but has no lifecycle profile or native lifecycle claim. ZCode retains
+read-only session evidence only.
 
 The lifecycle commands do not read raw session transcripts, contact a registry,
 edit host settings, or register an `apply` path.
@@ -308,6 +310,25 @@ edit host settings, or register an `apply` path.
   publication contract. See
   [Story #93](https://github.com/QoderAI/better-harness/issues/93)
   and the [dated support specification](../specs/2026-08-18-93-deepseek-harness-session-evidence.md).
+- ZCode has a session-evidence-only adapter at
+  `scripts/session-analysis/platforms/zcode.mjs` with adapter metadata
+  `zcode-v1`. It reads one SQLite database, resolved as `--zcode-db` over
+  `<--zcode-home>/cli/db/db.sqlite` over `~/.zcode/cli/db/db.sqlite`, through
+  `node:sqlite` in read-only mode with `PRAGMA query_only = ON`; a runtime
+  without `node:sqlite` degrades to an analysis warning. Discovery excludes
+  soft-deleted sessions (`time_deleted`), qualifies a workspace only from
+  `session.directory`, and retains `parent_id`/`task_type` subagent linkage.
+  Model usage keeps the native logical request identity
+  `logical_request_id@attempt_index`; because ZCode's `input_tokens` already
+  contains cache reads and cache creation, the adapter reports uncached input
+  separately and sets `cacheAccountingMode` to `separate-input-lane` instead of
+  double-counting the cache lanes. Messages whose native origin is not
+  `real_user`, and parts with an injected source, are never counted as user
+  turns. Prompts, commands, tool output, and content are excluded by default and
+  appear only under the existing local-diagnosis include flags. ZCode has no
+  install shell, configured-asset inventory, lifecycle target, report route,
+  Canvas, Checkup, Studio, or public Quickstart in this repository; it is not a
+  verified DSH-style install claim.
 
 ## Output Modes
 

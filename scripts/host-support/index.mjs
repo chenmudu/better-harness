@@ -128,6 +128,12 @@ export const HOST_DESCRIPTORS = Object.freeze([
     ],
     sessionScopeTokens: [".dsh", "dsh", "deepseek-harness"],
   }),
+  descriptor({
+    id: "zcode",
+    displayName: "ZCode",
+    capabilities: [HOST_CAPABILITIES.SESSION_ANALYSIS],
+    sessionScopeTokens: [".zcode", "zcode"],
+  }),
 ]);
 
 const HOST_BY_ID = new Map(HOST_DESCRIPTORS.map((host) => [host.id, host]));

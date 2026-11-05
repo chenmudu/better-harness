@@ -46,6 +46,7 @@ import {
 } from "../../scripts/session-analysis/platforms/copilot.mjs";
 import { KimiSessionAnalyzer } from "../../scripts/session-analysis/platforms/kimi.mjs";
 import { DshSessionAnalyzer } from "../../scripts/session-analysis/platforms/dsh.mjs";
+import { ZcodeSessionAnalyzer } from "../../scripts/session-analysis/platforms/zcode.mjs";
 import { measureLongSessionRows } from "../../scripts/session-analysis/long-sessions.mjs";
 import { summarizeSessionEvents } from "../../scripts/commit-session-link/session-source.mjs";
 
@@ -71,6 +72,7 @@ test("root dispatcher creates Claude and Cursor provider analyzers", async () =>
   assert.ok(await createAnalyzer("workbuddy") instanceof WorkbuddySessionAnalyzer);
   assert.ok(await createAnalyzer("grok") instanceof GrokSessionAnalyzer);
   assert.ok(await createAnalyzer("dsh") instanceof DshSessionAnalyzer);
+  assert.ok(await createAnalyzer("zcode") instanceof ZcodeSessionAnalyzer);
   assert.ok(await createCapabilityAnalyzer("claude") instanceof ClaudeSessionAnalyzer);
   assert.ok(await createCapabilityAnalyzer("augment") instanceof AugmentSessionAnalyzer);
   assert.ok(await createCapabilityAnalyzer("cursor") instanceof CursorSessionAnalyzer);
@@ -80,6 +82,7 @@ test("root dispatcher creates Claude and Cursor provider analyzers", async () =>
   assert.ok(await createCapabilityAnalyzer("workbuddy") instanceof WorkbuddySessionAnalyzer);
   assert.ok(await createCapabilityAnalyzer("grok") instanceof GrokSessionAnalyzer);
   assert.ok(await createCapabilityAnalyzer("dsh") instanceof DshSessionAnalyzer);
+  assert.ok(await createCapabilityAnalyzer("zcode") instanceof ZcodeSessionAnalyzer);
   await assert.rejects(() => createAnalyzer("unknown-host"), /Unsupported session provider: unknown-host/u);
 });
 
@@ -95,9 +98,12 @@ test("public session-analysis main preserves the bare help alias", async () => {
 
   assert.equal(result, 0);
   assert.equal(output, SESSION_ANALYSIS_HELP);
-  assert.match(output, /\|dsh>/u);
+  assert.match(output, /\|dsh(?:\||>)/u);
+  assert.match(output, /\|zcode>/u);
   assert.match(output, /--augment-home <dir>\s+Augment\/Auggie data root \(default: ~\/\.augment\)/u);
   assert.match(output, /--dsh-home <dir>\s+DeepSeek Harness data root \(default: ~\/\.dsh or \$DSH_HOME\)/u);
+  assert.match(output, /--zcode-home <dir>\s+ZCode data root \(default: ~\/\.zcode\)/u);
+  assert.match(output, /--zcode-db <file>\s+ZCode SQLite session database/u);
 });
 
 test("Claude, Cursor, and Qwen workspace slugs cover Unix and Windows layouts", () => {

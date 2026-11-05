@@ -14,7 +14,8 @@ host-neutral.
 ## Support levels
 
 Better Harness currently declares ten more complete capability-level host
-adapters, a partial Augment/Auggie session-only adapter, plus bounded DSH
+adapters, a partial Augment/Auggie session-only adapter, a ZCode session-only
+adapter, plus bounded DSH
 discovery, configured-assets, and session slices.
 Six have verified public Quickstart paths. Pi, Kimi Code, WorkBuddy, and Grok
 are visible as adapter support because their installation and end-to-end
@@ -22,7 +23,8 @@ evidence boundaries differ from that six-host set. DSH has Verified
 install/discovery for a qualified runtime/preset boundary plus developer-preview
 configured-assets and session-evidence contracts. It supports shared read-only
 Asset Practices, neutral Harness analysis, Evidence Bundles, and qualified
-portable HTML durable output. The
+portable HTML durable output. ZCode is limited to read-only SQLite session
+evidence and has no install, configured-asset, lifecycle, or report claim. The
 [canonical adapter matrix](https://github.com/QoderAI/better-harness/blob/main/docs/adapters/README.md)
 remains the complete capability-level source of truth.
 
@@ -42,6 +44,7 @@ remains the complete capability-level source of truth.
 | WorkBuddy | Adapter support | Analysis-capable source-local host | None; skills use WorkBuddy-owned paths | Workspace-matching WorkBuddy JSONL transcripts | Self-contained HTML + Markdown |
 | Grok | Adapter support | Analysis-capable source-local host | None; skills use Grok-owned paths | Workspace-matching Grok session dirs (`updates.jsonl`) | Self-contained HTML + Markdown |
 | DeepSeek Harness (DSH) | Verified install/discovery | Qualified headless/base and Web `standard`/`code`/`cordis`; shared read-only analysis over partial configured-assets and session evidence | `.dsh-plugin/cordis.patch.yml` Cordis bundle shell plus the local DSH Cordis policy; no lifecycle shell | DSH JSONL backend session format `0`: raw `.jsonl` and feature-detected `.jsonl.zstd` | Self-contained HTML + Markdown |
+| ZCode | Partial adapter | Session evidence only; no install, configured-asset, lifecycle, or report claim | None | Read-only SQLite sessions from `~/.zcode/cli/db/db.sqlite`; workspace from `session.directory`, soft-deleted sessions excluded, parent/task subagents retained | Session evidence only |
 
 The `@qoder-ai/better-harness` npm package includes all eight plugin metadata
 roots; `.dsh-plugin/` is the DeepSeek Harness Cordis bundle shell, installed by
@@ -72,7 +75,8 @@ native lifecycle contract yet, so lifecycle targets reject them with
 `UNKNOWN_HOST` while their adapter evidence stays available. DSH likewise has
 no lifecycle profile: lifecycle targets reject it with `UNKNOWN_HOST`; its
 manually configured verified discovery and partial session evidence remain
-available. The shadow host profiles do not replace the canonical adapter matrix
+available. ZCode has no lifecycle profile either: targets reject it with
+`UNKNOWN_HOST`, while its read-only session evidence stays available. The shadow host profiles do not replace the canonical adapter matrix
 while ADR-0002 remains proposed. DSH's verified discovery does not add a
 lifecycle target.
 
@@ -257,6 +261,27 @@ under `<target>/.dsh/better-harness` by the generic portable publication and
 rollback contract. See the
 [canonical source matrix](https://github.com/QoderAI/better-harness/blob/main/docs/adapters/README.md)
 and [Story #93](https://github.com/QoderAI/better-harness/issues/93).
+
+### ZCode {#zcode}
+
+ZCode support is intentionally limited to read-only local Session evidence.
+`session-analysis --platform zcode` reads a single SQLite database, resolved as
+`--zcode-db` over `<--zcode-home>/cli/db/db.sqlite` over
+`~/.zcode/cli/db/db.sqlite`, through `node:sqlite` opened read-only with
+`PRAGMA query_only = ON`. Discovery excludes soft-deleted sessions
+(`time_deleted`), qualifies a workspace only from `session.directory`, and
+retains `parent_id`/`task_type` subagent linkage. A model request keeps its
+native `logical_request_id@attempt_index` identity so retries stay distinct.
+ZCode's `input_tokens` already includes cache reads and cache creation, so the
+adapter reports uncached input separately with `cacheAccountingMode:
+separate-input-lane` rather than adding the cache lanes again. Messages whose
+native origin is not `real_user`, and parts with an injected source, never count
+as user turns. Prompts, commands, tool output, and content are excluded by
+default and appear only through the existing local-diagnosis include flags.
+
+ZCode has no install shell, configured-asset inventory, lifecycle target,
+report route, Canvas, Checkup, Studio, or public Quickstart in this repository.
+It is not a verified install claim.
 
 ## Capability coverage
 
