@@ -6,6 +6,7 @@ import qwen from "./profiles/qwen.mjs";
 import copilot from "./profiles/copilot.mjs";
 import pi from "./profiles/pi.mjs";
 import workbuddy from "./profiles/workbuddy.mjs";
+import zcode from "./profiles/zcode.mjs";
 
 export { HOST_SUPPORT_SCHEMA_VERSION } from "./profile-builders.mjs";
 
@@ -18,4 +19,5 @@ export const HOST_PROFILES = Object.freeze([
   copilot,
   pi,
   workbuddy,
+  zcode,
 ]);

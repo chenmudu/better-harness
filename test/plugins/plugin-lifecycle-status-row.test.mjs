@@ -107,6 +107,6 @@ test("all-host status emits only rows accepted by the status model", async () =>
     }),
   });
 
-  assert.equal(result.rows.length, 11);
+  assert.equal(result.rows.length, 12);
   assert.equal(result.rows.every(validatePluginLifecycleStatusRow), true);
 });

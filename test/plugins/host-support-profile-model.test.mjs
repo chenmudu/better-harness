@@ -18,7 +18,7 @@ import {
   validateHostProfileRegistry,
 } from "../../scripts/host-support/profile-model.mjs";
 
-const HOSTS = ["claude", "codex", "qoder", "cursor", "qwen", "copilot", "pi", "workbuddy"];
+const HOSTS = ["claude", "codex", "qoder", "cursor", "qwen", "copilot", "pi", "workbuddy", "zcode"];
 
 function validSurface(overrides = {}) {
   return defineSurface({

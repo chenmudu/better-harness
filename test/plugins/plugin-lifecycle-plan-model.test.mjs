@@ -83,7 +83,7 @@ test("every host surface and lifecycle lane emits a validated plan model", async
       }
     }
   }
-  assert.equal(plans, 66);
+  assert.equal(plans, 72);
 });
 
 test("mutation and verification steps carry distinct effect contracts", async () => {

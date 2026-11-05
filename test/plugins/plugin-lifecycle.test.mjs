@@ -78,7 +78,7 @@ test("status covers every host and preserves WorkBuddy as unsupported", async ()
 
   assert.deepEqual(
     [...new Set(result.rows.map((row) => row.target.hostId))],
-    ["claude", "codex", "qoder", "cursor", "qwen", "copilot", "pi", "workbuddy"],
+    ["claude", "codex", "qoder", "cursor", "qwen", "copilot", "pi", "workbuddy", "zcode"],
   );
   const workbuddy = result.rows.find((row) => row.target.hostId === "workbuddy");
   assert.equal(workbuddy.verification, "unobserved");
@@ -103,7 +103,7 @@ test("status keeps multiple installation scopes as independent rows", async () =
 });
 
 test("status routes isolated homes for inventory surfaces and skips bounded static surfaces", async () => {
-  for (const host of ["claude", "codex", "qoder", "cursor", "qwen", "copilot", "pi", "workbuddy"]) {
+  for (const host of ["claude", "codex", "qoder", "cursor", "qwen", "copilot", "pi", "workbuddy", "zcode"]) {
     let captured;
     const hostHome = path.join(os.tmpdir(), `${host} lifecycle home`);
     await inspectPluginLifecycle({
@@ -665,6 +665,7 @@ test("every host emits an explicit plan and verification result", async () => {
     ["pi", "cli", "user", "manual"],
     ["pi", "cli-session", "session", "manual"],
     ["workbuddy", "skills", "user", "blocked"],
+    ["zcode", "cli", "user", "ready"],
   ];
   for (const [host, surface, scope, state] of cases) {
     const plan = await buildPluginLifecyclePlan({
@@ -685,7 +686,7 @@ test("every host emits an explicit plan and verification result", async () => {
   });
   assert.deepEqual(
     [...new Set(verification.rows.map((row) => row.target.hostId))].sort(),
-    ["claude", "codex", "copilot", "cursor", "pi", "qoder", "qwen", "workbuddy"],
+    ["claude", "codex", "copilot", "cursor", "pi", "qoder", "qwen", "workbuddy", "zcode"],
   );
 });
 

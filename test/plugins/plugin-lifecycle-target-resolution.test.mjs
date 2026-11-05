@@ -17,7 +17,7 @@ function rejectsWith(code, message, hint) {
 }
 
 test("status target resolution owns all-host, alias, surface, and home routing", () => {
-  assert.equal(resolveStatusTarget().profiles.length, 8);
+  assert.equal(resolveStatusTarget().profiles.length, 9);
 
   const aliased = resolveStatusTarget({ host: "qwen-code", surface: "cli" });
   assert.equal(aliased.profiles[0].hostId, "qwen");
@@ -36,7 +36,7 @@ test("status target resolution owns all-host, alias, surface, and home routing",
     rejectsWith(
       "UNKNOWN_HOST",
       "Unknown host: missing",
-      "Use one of: claude, codex, qoder, cursor, qwen, copilot, pi, workbuddy, or all.",
+      "Use one of: claude, codex, qoder, cursor, qwen, copilot, pi, workbuddy, zcode, or all.",
     ),
   );
   // Catalog hosts without a validated lifecycle contract stay unknown here

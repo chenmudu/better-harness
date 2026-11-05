@@ -349,7 +349,7 @@ test("verifies the pinned real runtime closure through better-harness-cli", asyn
     const result = await verifyAntigravityPluginArtifact(pluginRoot);
     assert.ok(result.runtimeClosure.files.includes("scripts/better-harness.mjs"));
     assert.ok(result.runtimeClosure.files.includes("scripts/better-harness-cli/cli.mjs"));
-    assert.equal(result.runtimeClosure.modules, 19);
+    assert.equal(result.runtimeClosure.modules, 20);
   });
 });
 
@@ -977,7 +977,7 @@ test("builds, verifies, runs, and atomically replaces the real pinned artifact",
       assert.equal(await lstat(path.join(outputRoot, ...relative.split("/"))).catch(() => null), null);
     }
     const verified = await verifyAntigravityPluginArtifact(outputRoot);
-    assert.equal(verified.runtimeClosure.modules, 19);
+    assert.equal(verified.runtimeClosure.modules, 20);
     const help = spawnSync(process.execPath, ["scripts/better-harness.mjs", "--help"], {
       cwd: outputRoot,
       encoding: "utf8",

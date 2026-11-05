@@ -12,7 +12,7 @@ import {
 } from "../../scripts/host-support/index.mjs";
 import { evidence, operation, shell } from "../../scripts/host-support/profile-builders.mjs";
 
-const HOSTS = ["claude", "codex", "qoder", "cursor", "qwen", "copilot", "pi", "workbuddy"];
+const HOSTS = ["claude", "codex", "qoder", "cursor", "qwen", "copilot", "pi", "workbuddy", "zcode"];
 const contractFixture = JSON.parse(readFileSync(
   new URL("../fixtures/plugin-lifecycle/native-help-contracts.v1.json", import.meta.url),
   "utf8",
@@ -20,7 +20,7 @@ const contractFixture = JSON.parse(readFileSync(
 
 test("host-support profiles cover the canonical host set and aliases", () => {
   assert.deepEqual(supportedHostIds(), HOSTS);
-  assert.deepEqual(supportedHostIds({ managedOnly: true }), HOSTS.slice(0, -1));
+  assert.deepEqual(supportedHostIds({ managedOnly: true }), HOSTS.filter((host) => host !== "workbuddy"));
   assert.equal(resolveHostId("claude-code"), "claude");
   assert.equal(resolveHostId("qwen-code"), "qwen");
   assert.equal(resolveHostId("github-copilot"), "copilot");
@@ -182,7 +182,7 @@ test("known contract gaps remain explicit instead of becoming shell commands", (
 });
 
 test("native help summaries bind six observed CLIs and one unobserved Pi contract", () => {
-  assert.deepEqual(Object.keys(contractFixture.hosts), HOSTS.slice(0, -1));
+  assert.deepEqual(Object.keys(contractFixture.hosts), HOSTS.filter((host) => host !== "workbuddy"));
   assert.deepEqual(
     Object.entries(contractFixture.hosts)
       .filter(([, value]) => value.observation === "native-help")
@@ -191,6 +191,7 @@ test("native help summaries bind six observed CLIs and one unobserved Pi contrac
   );
   assert.equal(contractFixture.hosts.qoder.observation, "native-help-with-drift");
   assert.equal(contractFixture.hosts.cursor.observation, "native-help-with-drift");
+  assert.equal(contractFixture.hosts.zcode.observation, "native-help-isolated-smoke");
   assert.equal(contractFixture.hosts.pi.observation, "unobserved");
   assert.equal(contractFixture.hosts.pi.version, null);
   assert.equal(contractFixture.hosts.pi.installedPackageSource.package, "@earendil-works/pi-coding-agent");
