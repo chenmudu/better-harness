@@ -246,6 +246,7 @@ test("npm package metadata includes every public host manifest", () => {
     ".github/plugin/",
     ".qoder-plugin/",
     ".zcode-plugin/",
+    "marketplace.json",
     ".kimi-plugin/",
     "qwen-extension.json",
     "prompts/",

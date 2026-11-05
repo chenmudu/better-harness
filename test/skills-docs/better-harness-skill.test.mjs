@@ -103,4 +103,7 @@ test("Better Harness Skill routes DSH through the shared evidence and durable re
   assert.equal(hostIdsFor(HOST_CAPABILITIES.EVIDENCE_BUNDLE).includes("dsh"), true);
   assert.equal(hostIdsFor(HOST_CAPABILITIES.REPORT_RENDERING).includes("dsh"), true);
   assert.equal(RENDER_REPORT_PLATFORMS.includes("dsh"), true);
+  assert.equal(hostIdsFor(HOST_CAPABILITIES.EVIDENCE_BUNDLE).includes("zcode"), true);
+  assert.equal(hostIdsFor(HOST_CAPABILITIES.REPORT_RENDERING).includes("zcode"), true);
+  assert.equal(RENDER_REPORT_PLATFORMS.includes("zcode"), true);
 });

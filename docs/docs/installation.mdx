@@ -401,7 +401,7 @@ ZCode's CLI manages plugins through native marketplaces. Register this checkout
 (or the GitHub repository) and install Better Harness at user or project scope:
 
 ```bash
-zcode plugins marketplace add <path-or-repository> --scope user
+zcode plugins marketplace add <path-to-checkout>/marketplace.json --scope user
 zcode plugins install better-harness@better-harness --scope user
 ```
 
@@ -413,7 +413,9 @@ zcode plugins list --json
 
 The output should include `better-harness@better-harness` with two skills and
 an enabled state. Better Harness ships the native `.zcode-plugin/plugin.json`
-and uses `.claude-plugin/marketplace.json`.
+and the ZCode-only root `marketplace.json`; `.claude-plugin/marketplace.json`
+remains the Claude marketplace. ZCode reports use self-contained HTML or
+Markdown.
 
 Better Harness can observe the local installation and plan native steps without
 running them:

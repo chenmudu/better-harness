@@ -54,6 +54,7 @@
     ".github/plugin/",
     ".qoder-plugin/",
     ".zcode-plugin/",
+    "marketplace.json",
     ".kimi-plugin/",
     "qwen-extension.json",
     "AGENTS.md",

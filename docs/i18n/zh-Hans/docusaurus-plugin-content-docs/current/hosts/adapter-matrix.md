@@ -33,7 +33,7 @@ Better Harness 当前声明了十个能力层宿主适配器，其中六个已�
 | Kimi Code | 适配器支持 | 具备分析能力的源码本地宿主 | `.kimi-plugin/plugin.json` | 匹配工作区的 Kimi wire 转录 | 自包含 HTML + Markdown |
 | WorkBuddy | 适配器支持 | 具备分析能力的源码本地宿主 | 无；Skill 使用 WorkBuddy 自有路径 | 匹配工作区的 WorkBuddy JSONL 转录 | 自包含 HTML + Markdown |
 | Grok | 适配器支持 | 具备分析能力的源码本地宿主 | 无；Skill 使用 Grok 自有路径 | 匹配工作区的 Grok 会话目录（`updates.jsonl`） | 自包含 HTML + Markdown |
-| ZCode | 适配器支持 | 只读会话、已配置资产与 CLI 插件生命周期；无报告路由或桌面插件 surface | `.zcode-plugin/` | 来自 `~/.zcode/cli/db/db.sqlite` 的只读 SQLite 会话；工作区取自 `session.directory`，排除软删除会话，保留父/任务子代理关联 | 仅会话证据 |
+| ZCode | 适配器支持 | 只读会话、已配置资产、CLI 插件生命周期与共享 Harness 报告；无桌面插件 surface | `.zcode-plugin/` | 来自 `~/.zcode/cli/db/db.sqlite` 的只读 SQLite 会话；工作区取自 `session.directory`，排除软删除会话，保留父/任务子代理关联 | 自包含 HTML + Markdown |
 
 `@qoder-ai/better-harness` npm 包含全部七个插件元数据根目录。生成的 Qoder
 运行时 bundle 只包含 Qoder shell。Pi 复用现有 `package.json` 中的安装元数据，
@@ -144,15 +144,16 @@ subagents，以及插件记录与贡献。项目配置按 ZCode 的白名单读�
 维护者可执行：
 
 ```bash
-zcode plugins marketplace add <path-or-repository> --scope user
+zcode plugins marketplace add <path-to-checkout>/marketplace.json --scope user
 zcode plugins install better-harness@better-harness --scope user
 zcode plugins list --json
 ```
 
 隔离安装冒烟结果为 `better-harness@better-harness` 版本 `0.7.0-alpha2`，包含两个
 Skill 且为 enabled。`plugin status/plan/verify --host zcode` 只观察本地安装、输出
-外部原生步骤，且从不执行。ZCode 仍没有报告路由、Canvas、Checkup、Studio、
-桌面插件 surface 或公开快速开始声明。
+外部原生步骤，且从不执行。ZCode 支持 evidence bundle、共享 Harness 分析与
+自包含 HTML/Markdown 报告；没有 Canvas、Checkup、Studio、桌面插件 surface 或公开快速开始声明。
+根目录的 `marketplace.json` 只服务 ZCode；`.claude-plugin/marketplace.json` 仍只服务 Claude。
 
 ## 能力覆盖
 

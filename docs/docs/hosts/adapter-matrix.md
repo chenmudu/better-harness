@@ -46,7 +46,7 @@ remains the complete capability-level source of truth.
 | WorkBuddy | Adapter support | Analysis-capable source-local host | None; skills use WorkBuddy-owned paths | Workspace-matching WorkBuddy JSONL transcripts | Self-contained HTML + Markdown |
 | Grok | Adapter support | Analysis-capable source-local host | None; skills use Grok-owned paths | Workspace-matching Grok session dirs (`updates.jsonl`) | Self-contained HTML + Markdown |
 | DeepSeek Harness (DSH) | Verified install/discovery | Qualified headless/base and Web `standard`/`code`/`cordis`; shared read-only analysis over partial configured-assets and session evidence | `.dsh-plugin/cordis.patch.yml` Cordis bundle shell plus the local DSH Cordis policy; no lifecycle shell | DSH JSONL backend session format `0`: raw `.jsonl` and feature-detected `.jsonl.zstd` | Self-contained HTML + Markdown |
-| ZCode | Adapter support | Read-only sessions, configured assets, and CLI plugin lifecycle; no report route or desktop plugin surface | `.zcode-plugin/` | Read-only SQLite sessions from `~/.zcode/cli/db/db.sqlite`; workspace from `session.directory`, soft-deleted sessions excluded, parent/task subagents retained | Session evidence only |
+| ZCode | Adapter support | Read-only sessions, configured assets, CLI plugin lifecycle, and shared Harness reports; no desktop plugin surface | `.zcode-plugin/` | Read-only SQLite sessions from `~/.zcode/cli/db/db.sqlite`; workspace from `session.directory`, soft-deleted sessions excluded, parent/task subagents retained | Self-contained HTML + Markdown |
 
 The `@qoder-ai/better-harness` npm package includes all eight plugin metadata
 roots; `.dsh-plugin/` is the DeepSeek Harness Cordis bundle shell, installed by
@@ -298,7 +298,7 @@ The minimum install surface ships the native `.zcode-plugin/plugin.json` and
 uses `.claude-plugin/marketplace.json`. Maintainers can run:
 
 ```bash
-zcode plugins marketplace add <path-or-repository> --scope user
+zcode plugins marketplace add <path-to-checkout>/marketplace.json --scope user
 zcode plugins install better-harness@better-harness --scope user
 zcode plugins list --json
 ```
@@ -306,8 +306,10 @@ zcode plugins list --json
 The isolated install smoke reported `better-harness@better-harness` version
 `0.7.0-alpha2` with two skills and enabled state. `plugin status/plan/verify
 --host zcode` observe the local install, emit external native steps, and never
-execute them. ZCode still has no report route, Canvas, Checkup, Studio,
-desktop plugin surface, or public Quickstart claim.
+execute them. ZCode supports the evidence bundle, shared Harness analysis, and
+self-contained HTML or Markdown reports; it has no Canvas, Checkup, Studio,
+desktop plugin surface, or public Quickstart claim. The root `marketplace.json`
+is ZCode-only; `.claude-plugin/marketplace.json` remains the Claude marketplace.
 
 ## Capability coverage
 

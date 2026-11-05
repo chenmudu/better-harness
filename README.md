@@ -25,7 +25,7 @@ under the [MIT License](LICENSE).
 Install this fork for ZCode:
 
 ```bash
-zcode plugins marketplace add https://github.com/chenmudu/better-harness.git --scope user
+zcode plugins marketplace add <path-to-checkout>/marketplace.json --scope user
 zcode plugins install better-harness@better-harness --scope user
 ```
 

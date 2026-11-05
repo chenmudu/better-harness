@@ -148,6 +148,7 @@ const required = [
   "package/.github/plugin/marketplace.json",
   "package/.qoder-plugin/plugin.json",
   "package/.zcode-plugin/plugin.json",
+  "package/marketplace.json",
   "package/.kimi-plugin/plugin.json",
   "package/.dsh-plugin/cordis.patch.yml",
   "package/scripts/dsh-skill-discovery/bundle.mjs",

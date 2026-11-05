@@ -18,9 +18,9 @@
 | Update | `zcode plugins update <plugin> [-s <scope>]` |
 | Remove | `zcode plugins uninstall <plugin> [-s <scope>] [--keep-data] [--force]` |
 | Verify | `zcode plugins list [--json] [--available]` |
-| Marketplace | `zcode plugins marketplace add <source> [--scope <scope>] [--sparse <path>]`; source accepts URL, path, or GitHub repo |
+| Marketplace | `zcode plugins marketplace add <source> [--scope <scope>] [--sparse <path>]`; Better Harness registers its ZCode-only root `marketplace.json` as an explicit file so ZCode does not fall back to `.claude-plugin/marketplace.json` |
 | Scopes | `user`（默认）、`project` |
-| Isolated smoke | Temporary `HOME`/`USERPROFILE`/`ZCODE_HOME`: local checkout added as marketplace, `better-harness@better-harness` installed as `0.7.0-alpha2` with 2 skills `[enabled]`, disable/enable/update succeeded, `uninstall --force` removed it |
+| Isolated smoke | Temporary `HOME`/`USERPROFILE`/`ZCODE_HOME`: the local checkout's root `marketplace.json` was registered as a file marketplace, `better-harness@better-harness` installed as `0.7.0-alpha2` with 2 skills `[enabled]` and native `.zcode-plugin/plugin.json`, disable/enable/update succeeded, `uninstall --force` removed it |
 
 Contract fixture: `test/fixtures/plugin-lifecycle/native-help-contracts.v1.json#hosts.zcode`.
 
@@ -29,7 +29,7 @@ Contract fixture: `test/fixtures/plugin-lifecycle/native-help-contracts.v1.json#
 | Item | Value | Boundary |
 | --- | --- | --- |
 | Surface | `zcode/cli` | Only the CLI surface is declared. Desktop plugin settings were not proven to read the same store, so no desktop surface is claimed. |
-| Distribution | marketplace | Better Harness ships the native `.zcode-plugin/plugin.json` + `.claude-plugin/marketplace.json`. ZCode prefers `.zcode-plugin` over the `.claude-plugin`/`.codex-plugin` fallbacks. |
+| Distribution | marketplace | Better Harness ships the native `.zcode-plugin/plugin.json` and the ZCode-only root `marketplace.json`. ZCode prefers `.zcode-plugin` over the `.claude-plugin`/`.codex-plugin` manifest fallbacks; the separate marketplace file keeps ZCode registration from reading `.claude-plugin/marketplace.json`. |
 | Observation | inventory | Installed records plus user `plugins.dirs` inline plugins collected by the ZCode agent-customize provider. |
 | Inventory homes | `--zcode-home` / `~/.zcode`; `zcodeUserHome` / `~` | Both routes bind to `--host-home` during status. |
 | Install home binding | none | ZCode CLI resolves `~/.zcode/cli` through `homedir()` and exposes no config-root env override; plans with `--host-home` are blocked instead of guessing. |
@@ -53,7 +53,7 @@ Contract fixture: `test/fixtures/plugin-lifecycle/native-help-contracts.v1.json#
 - AC-L5（Plan）：install/update/remove 生成 `zcode plugins ...` argv；mutation 步骤标为 external，verification 步骤标为 read-only；未安装时 update 被阻止，remove 为 noop。
 - AC-L6（Verify）：`plugin verify --host zcode` 只读本地证据，报告 targets/partial/failed 与 diagnostics。
 - AC-L7（Isolation / honesty）：`--host-home` 会隔离 status inventory（`zcodeHome` 与 `zcodeUserHome`）；ZCode 没有可绑定的 native home，因此 plan 明确以 `ISOLATED_HOST_HOME_UNREPRESENTABLE` 阻止，而不是回落到真实 home。未知 surface 报 `UNKNOWN_HOST_SURFACE`。
-- AC-L8（Boundaries）：ZCode 不进入 Checkup、Canvas 或报告路由；不发布托管 marketplace；不执行任何 ZCode 命令。
+- AC-L8（Boundaries）：ZCode 不进入 Checkup 或 Canvas；使用共享 Harness 分析与 HTML/Markdown 报告；不发布托管 marketplace；不执行任何 ZCode 命令。
 
 ## Non-goals
 

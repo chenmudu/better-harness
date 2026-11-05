@@ -214,6 +214,21 @@ test("ZCode plans refuse an isolated host home it cannot bind", async () => {
   assert.ok(plan.blockers.some((item) => item.code === "ISOLATED_HOST_HOME_UNREPRESENTABLE"));
 });
 
+test("repository ships a ZCode-only marketplace file", async () => {
+  const repoRoot = fileURLToPath(new URL("../..", import.meta.url));
+  const [marketplace, pkg] = await Promise.all([
+    readFile(path.join(repoRoot, "marketplace.json"), "utf8").then(JSON.parse),
+    readFile(path.join(repoRoot, "package.json"), "utf8").then(JSON.parse),
+  ]);
+  assert.equal(marketplace.name, "better-harness");
+  assert.equal(marketplace.plugins.length, 1);
+  const plugin = marketplace.plugins[0];
+  assert.equal(plugin.name, "better-harness");
+  assert.equal(plugin.version, pkg.version);
+  assert.equal(plugin.source, "./");
+  assert.equal(marketplace.owner.name, plugin.author.name);
+});
+
 test("repository ships the native ZCode plugin manifest", async () => {
   const repoRoot = fileURLToPath(new URL("../..", import.meta.url));
   const [zcode, claude, pkg] = await Promise.all([

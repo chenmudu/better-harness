@@ -298,7 +298,7 @@ ZCode CLI 通过原生 marketplace 管理插件。把本检出目录（或 GitHu
 marketplace，并在 user 或 project scope 安装 Better Harness：
 
 ```bash
-zcode plugins marketplace add <path-or-repository> --scope user
+zcode plugins marketplace add <path-to-checkout>/marketplace.json --scope user
 zcode plugins install better-harness@better-harness --scope user
 ```
 
@@ -309,8 +309,9 @@ zcode plugins list --json
 ```
 
 输出中应包含 `better-harness@better-harness`，带两个 Skill 且状态为 enabled。
-Better Harness 提供原生 `.zcode-plugin/plugin.json`，并使用
-`.claude-plugin/marketplace.json`。
+Better Harness 提供原生 `.zcode-plugin/plugin.json` 和 ZCode 专用的根
+`marketplace.json`；`.claude-plugin/marketplace.json` 仍只服务 Claude。
+ZCode 报告使用自包含 HTML 或 Markdown。
 
 Better Harness 可以观察本地安装并规划原生步骤，但不执行：
 
