@@ -118,7 +118,7 @@ test("ZCode plans install, update, and remove with native marketplace argv", asy
   });
   assert.equal(install.state, "ready");
   assert.deepEqual(install.steps.map((step) => step.argv), [
-    ["zcode", "plugins", "marketplace", "add", "https://github.com/chenmudu/better-harness.git", "--scope", "user"],
+    ["zcode", "plugins", "marketplace", "add", "https://github.com/QoderAI/better-harness.git", "--scope", "user"],
     ["zcode", "plugins", "install", "better-harness@better-harness", "--scope", "user"],
   ]);
   assert.equal(install.steps.every((step) => step.effects === "external"), true);

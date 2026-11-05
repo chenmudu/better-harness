@@ -11,10 +11,10 @@ sidebar_position: 2
 
 完整且规范的流程位于仓库中：
 
-- [新增 Coding Agent 贡献指南](https://github.com/chenmudu/better-harness/blob/main/docs/adapters/contributing-new-coding-agent.md)
-- [仓库 Agent 指令](https://github.com/chenmudu/better-harness/blob/main/AGENTS.md)
-- [社区扩展地图](https://github.com/chenmudu/better-harness/blob/main/docs/community.md)
-- [架构原则](https://github.com/chenmudu/better-harness/blob/main/docs/ARCHITECTURE.md)
+- [新增 Coding Agent 贡献指南](https://github.com/QoderAI/better-harness/blob/main/docs/adapters/contributing-new-coding-agent.md)
+- [仓库 Agent 指令](https://github.com/QoderAI/better-harness/blob/main/AGENTS.md)
+- [社区扩展地图](https://github.com/QoderAI/better-harness/blob/main/docs/community.md)
+- [架构原则](https://github.com/QoderAI/better-harness/blob/main/docs/ARCHITECTURE.md)
 
 ## 先确定支持边界
 

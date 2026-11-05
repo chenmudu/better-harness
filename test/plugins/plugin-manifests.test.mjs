@@ -121,7 +121,8 @@ test("host plugin manifests expose canonical Better Harness resources", () => {
   assert.equal(claude.version, qoder.version);
   assert.equal(claude.description, qoder.description);
   assert.equal(claude.author.name, qoder.author.name);
-  assert.deepEqual(Object.keys(claude.author).sort(), ["name"]);
+  assert.equal(claude.author.email, qoder.author.email);
+  assert.deepEqual(Object.keys(claude.author).sort(), ["email", "name"]);
   assert.ok(claude.keywords.includes("skills"));
   assert.equal(claude.license, "MIT");
 
@@ -130,7 +131,8 @@ test("host plugin manifests expose canonical Better Harness resources", () => {
   assert.equal(cursor.version, qoder.version);
   assert.equal(cursor.description, qoder.description);
   assert.equal(cursor.author.name, qoder.author.name);
-  assert.deepEqual(Object.keys(cursor.author).sort(), ["name"]);
+  assert.equal(cursor.author.email, qoder.author.email);
+  assert.deepEqual(Object.keys(cursor.author).sort(), ["email", "name"]);
   assert.deepEqual(cursor.keywords, qoder.keywords);
   assert.equal(cursor.category, qoder.category);
   assert.deepEqual(cursor.tags, qoder.tags);
@@ -141,7 +143,7 @@ test("host plugin manifests expose canonical Better Harness resources", () => {
   assert.equal(codex.name, qoder.name);
   assert.equal(codex.version, qoder.version);
   assert.equal(codex.description, qoder.description);
-  assert.equal(codex.author.name, qoder.author.name);
+  assert.deepEqual(codex.author, qoder.author);
   assert.deepEqual(codex.keywords, qoder.keywords);
   assert.equal(codex.skills, "./skills/");
   assert.equal(codex.interface.displayName, qoder.displayName);
@@ -170,11 +172,12 @@ test("host plugin manifests expose canonical Better Harness resources", () => {
   assert.equal(kimi.version, qoder.version);
   assert.equal(kimi.description, qoder.description);
   assert.equal(kimi.author.name, qoder.author.name);
-  assert.deepEqual(Object.keys(kimi.author).sort(), ["name"]);
+  assert.equal(kimi.author.email, qoder.author.email);
+  assert.deepEqual(Object.keys(kimi.author).sort(), ["email", "name"]);
   assert.ok(kimi.keywords.includes("skills"));
   assert.equal(kimi.skills, "./skills/");
   assert.equal(kimi.license, "MIT");
-  assert.equal(kimi.homepage, "https://github.com/chenmudu/better-harness");
+  assert.equal(kimi.homepage, "https://github.com/QoderAI/better-harness");
   assert.equal(kimi.interface.displayName, qoder.displayName);
 
   assert.deepEqual(packageJson.pi, { skills: ["./skills"], prompts: ["./prompts"] });
@@ -190,11 +193,11 @@ test("host plugin manifests expose canonical Better Harness resources", () => {
   assert.equal(packageLock.packages[""].license, packageJson.license);
   assert.match(packageJson.scripts["publish:dry-run"], /registry\.npmjs\.org/u);
   for (const manifest of [qoder, claude, cursor, codex, copilot, kimi]) {
-    assert.equal(manifest.homepage, "https://github.com/chenmudu/better-harness");
-    assert.equal(manifest.repository, "https://github.com/chenmudu/better-harness");
+    assert.equal(manifest.homepage, "https://github.com/QoderAI/better-harness");
+    assert.equal(manifest.repository, "https://github.com/QoderAI/better-harness");
   }
-  assert.equal(codex.interface.privacyPolicyURL, undefined);
-  assert.equal(codex.interface.termsOfServiceURL, undefined);
+  assert.equal(codex.interface.privacyPolicyURL, "https://qoder.com/en/privacy-policy");
+  assert.equal(codex.interface.termsOfServiceURL, "https://qoder.com/product-service");
 
   assertExistingPath("references/loop-engineering/loop-blueprint.md");
   assertExistingPath("skills/better-harness/SKILL.md");
@@ -222,7 +225,8 @@ test("host plugin manifests expose canonical Better Harness resources", () => {
   assert.deepEqual(claudeMarketplace.plugins[0].author, claude.author);
 
   assert.equal(copilotMarketplace.name, "better-harness");
-  assert.deepEqual(copilotMarketplace.owner, { name: copilot.author.name });
+  // Copilot marketplace owners accept name and email only.
+  assert.deepEqual(copilotMarketplace.owner, { name: copilot.author.name, email: copilot.author.email });
   assert.equal(copilotMarketplace.metadata.version, copilot.version);
   assert.equal(copilotMarketplace.plugins.length, 1);
   assert.equal(copilotMarketplace.plugins[0].name, copilot.name);

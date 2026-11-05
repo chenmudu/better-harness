@@ -4,10 +4,11 @@
   "version": "0.7.0-alpha2",
   "description": "Build an AI-ready engineering system for safe coding-agent delivery and continuous software improvement.",
   "author": {
-    "name": "chenmudu"
+    "name": "Qoder",
+    "email": "dev@qoder.com"
   },
-  "homepage": "https://github.com/chenmudu/better-harness",
-  "repository": "https://github.com/chenmudu/better-harness",
+  "homepage": "https://github.com/QoderAI/better-harness",
+  "repository": "https://github.com/QoderAI/better-harness",
   "license": "MIT",
   "keywords": [
     "qoder-plugin",

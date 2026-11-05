@@ -56,6 +56,6 @@ Better Harness 刻意保持诚实：报告中的每条论断都以实际观察�
 ## 深入阅读
 
 - 一页概览：
-  [`docs/concepts.md`](https://github.com/chenmudu/better-harness/blob/main/docs/concepts.md)
+  [`docs/concepts.md`](https://github.com/QoderAI/better-harness/blob/main/docs/concepts.md)
 - 模型路由与高级视角：
-  [`models/routing.md`](https://github.com/chenmudu/better-harness/blob/main/models/routing.md)
+  [`models/routing.md`](https://github.com/QoderAI/better-harness/blob/main/models/routing.md)

@@ -8,7 +8,7 @@ import {
   validateLifecycleStep,
 } from "./profile-model.mjs";
 
-export const BETTER_HARNESS_REPOSITORY = "https://github.com/chenmudu/better-harness.git";
+export const BETTER_HARNESS_REPOSITORY = "https://github.com/QoderAI/better-harness.git";
 
 export {
   HOST_DISTRIBUTION_KINDS,
@@ -37,9 +37,6 @@ const BETTER_HARNESS_IDENTITY = Object.freeze({
     "qoderai/better-harness",
     "github.com/qoderai/better-harness",
     "git:github.com/qoderai/better-harness",
-    "chenmudu/better-harness",
-    "github.com/chenmudu/better-harness",
-    "git:github.com/chenmudu/better-harness",
     BETTER_HARNESS_REPOSITORY.toLowerCase(),
   ],
 });

@@ -28,7 +28,7 @@ export default defineHostProfile({
       lifecycle: {
         install: operation("manual", [
           manual(
-            "Use `pi install https://github.com/chenmudu/better-harness` for user scope, or add the package to the workspace `.pi/settings.json` package list for project scope.",
+            "Use `pi install https://github.com/QoderAI/better-harness` for user scope, or add the package to the workspace `.pi/settings.json` package list for project scope.",
             "Pi persists the package at the selected scope and discovers the better-harness Skill and prompt template.",
           ),
         ], evidence("pi-persistent-package-settings-source", "installed-package-source")),
@@ -52,7 +52,7 @@ export default defineHostProfile({
       lifecycle: {
         install: operation("manual", [
           manual(
-            "Start Pi with `pi -e git:github.com/chenmudu/better-harness`.",
+            "Start Pi with `pi -e git:github.com/QoderAI/better-harness`.",
             "That Pi session discovers the better-harness Skill and prompt template without persisting a package setting.",
           ),
         ], evidence("pi-temporary-extension-source", "installed-package-source")),
@@ -60,7 +60,7 @@ export default defineHostProfile({
         remove: operation("not-applicable"),
         verify: operation("manual", [
           manual(
-            "In the same Pi session started with `pi -e git:github.com/chenmudu/better-harness`, confirm that the better-harness Skill and prompt template are available.",
+            "In the same Pi session started with `pi -e git:github.com/QoderAI/better-harness`, confirm that the better-harness Skill and prompt template are available.",
             "The current Pi session exposes Better Harness; persistent package settings remain unchanged.",
           ),
         ], evidence("pi-temporary-extension-source", "installed-package-source")),

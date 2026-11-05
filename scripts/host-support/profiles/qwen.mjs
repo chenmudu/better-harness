@@ -33,7 +33,7 @@ export default defineHostProfile({
     lifecycle: {
       install: operation("supported", [
         shell(
-          ["qwen", "extensions", "install", "chenmudu/better-harness", "--scope", "{scopeValue}"],
+          ["qwen", "extensions", "install", "QoderAI/better-harness", "--scope", "{scopeValue}"],
           "The Better Harness extension is installed at the selected scope.",
         ),
       ], evidence("qwen-extensions-install")),

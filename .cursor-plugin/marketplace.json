@@ -1,7 +1,8 @@
 {
   "name": "better-harness",
   "owner": {
-    "name": "chenmudu"
+    "name": "Qoder",
+    "email": "dev@qoder.com"
   },
   "metadata": {
     "description": "Better Harness plugins for AI delivery readiness."

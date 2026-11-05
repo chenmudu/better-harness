@@ -26,7 +26,7 @@ export default defineHostProfile({
     lifecycle: {
       install: operation("supported", [
         shell(
-          ["copilot", "plugin", "marketplace", "add", "chenmudu/better-harness"],
+          ["copilot", "plugin", "marketplace", "add", "QoderAI/better-harness"],
           "The Better Harness marketplace is registered.",
         ),
         shell(

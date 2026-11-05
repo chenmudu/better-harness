@@ -84,4 +84,4 @@ that an intervention improved later work.
 
 The complete contract — check tables, findings, scoring boundaries, and
 longitudinal validation — lives in
-[`models/agent-work-loop.md`](https://github.com/chenmudu/better-harness/blob/main/models/agent-work-loop.md).
+[`models/agent-work-loop.md`](https://github.com/QoderAI/better-harness/blob/main/models/agent-work-loop.md).

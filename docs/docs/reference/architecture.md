@@ -51,4 +51,4 @@ available after the agent acts:
 ## Source of truth
 
 Directory routing, template ownership, and canonical-owner rules live in
-[`docs/ARCHITECTURE.md`](https://github.com/chenmudu/better-harness/blob/main/docs/ARCHITECTURE.md).
+[`docs/ARCHITECTURE.md`](https://github.com/QoderAI/better-harness/blob/main/docs/ARCHITECTURE.md).

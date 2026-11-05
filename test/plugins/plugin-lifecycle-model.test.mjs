@@ -49,7 +49,7 @@ test("shared lifecycle target validation distinguishes base and expected-source 
     ...target,
     expectedSource: {
       pluginId: "better-harness",
-      repository: "chenmudu/better-harness",
+      repository: "QoderAI/better-harness",
     },
   }, { label: "PluginLifecyclePlanV1", expectedSource: true }), true);
   assert.throws(

@@ -37,7 +37,7 @@ GitHub Copilot 产出自包含 HTML 并配套 Markdown。缺失或不完整的�
 1. **起草限定范围的修复。** 运行 `/better-harness repair-plan` 验证单条发现
    并起草限定范围的修复方案，不产生新的报告产物。
 2. **给重复工作指定负责机制。** 当某条发现看起来是重复劳动时，通过
-   [Loop Discovery](https://github.com/chenmudu/better-harness/blob/main/references/loop-engineering/loop-discovery.md)
+   [Loop Discovery](https://github.com/QoderAI/better-harness/blob/main/references/loop-engineering/loop-discovery.md)
    选出最小的持久化负责者：skill、hook、脚本、自动化或规则。
 3. **安排后续跟进。** 具备调度条件的发现会渲染出行级
    `/schedule /better-harness` 交接，带节奏、验证方式和停止条件。

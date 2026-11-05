@@ -44,7 +44,7 @@ next step, so a score turns into a change:
    artifacts.
 2. **Give recurring work an owner.** When a finding looks like repeated work,
    route it through
-   [Loop Discovery](https://github.com/chenmudu/better-harness/blob/main/references/loop-engineering/loop-discovery.md)
+   [Loop Discovery](https://github.com/QoderAI/better-harness/blob/main/references/loop-engineering/loop-discovery.md)
    to pick the smallest durable owner: a skill, hook, script, automation, or
    rule.
 3. **Schedule follow-up.** A schedule-ready finding renders a row-scoped

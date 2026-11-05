@@ -70,4 +70,4 @@ progressive detail you load when a task needs it.
 | Canonical owner | The single directory that owns a behavior's product judgment; host shells and mirrors point back to it. |
 
 The full glossary with owner links lives in
-[`docs/glossary.md`](https://github.com/chenmudu/better-harness/blob/main/docs/glossary.md).
+[`docs/glossary.md`](https://github.com/QoderAI/better-harness/blob/main/docs/glossary.md).

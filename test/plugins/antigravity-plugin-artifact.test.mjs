@@ -479,8 +479,8 @@ test("pins the canonical Markdown closure membership and source link classificat
     ["references/project-harness/observability.md", "(../agent-customize/agents-md-review.md)"],
     ["references/agent-customize/platforms/qoder.md", "(../custom-agents-review.md)"],
     ["references/agent-customize/platforms/codex.md", "(../custom-agents-review.md)"],
-    ["docs/adapters/contributing-new-coding-agent.md", "https://github.com/chenmudu/better-harness/blob/main/.agents/skills/change-traceability-review/SKILL.md"],
-    ["docs/adapters/contributing-new-coding-agent.md", "https://github.com/chenmudu/better-harness/blob/main/.github/pull_request_template.md"],
+    ["docs/adapters/contributing-new-coding-agent.md", "https://github.com/QoderAI/better-harness/blob/main/.agents/skills/change-traceability-review/SKILL.md"],
+    ["docs/adapters/contributing-new-coding-agent.md", "https://github.com/QoderAI/better-harness/blob/main/.github/pull_request_template.md"],
   ];
   for (const [relative, expected] of sourceAssertions) {
     assert.ok((await readFile(path.join(repositoryRoot, relative), "utf8")).includes(expected));

@@ -75,4 +75,4 @@ Agent Work Loop 评审：不可用的行为保持 `Unobserved`，项目 Harness 
 ## 完整模型
 
 完整契约——检查表、发现、评分边界和纵向验证——见
-[`models/agent-work-loop.md`](https://github.com/chenmudu/better-harness/blob/main/models/agent-work-loop.md)。
+[`models/agent-work-loop.md`](https://github.com/QoderAI/better-harness/blob/main/models/agent-work-loop.md)。

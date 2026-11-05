@@ -2,7 +2,8 @@
   "name": "better-harness",
   "description": "Better Harness plugins for AI delivery readiness.",
   "owner": {
-    "name": "chenmudu"
+    "name": "Qoder",
+    "email": "dev@qoder.com"
   },
   "plugins": [
     {
@@ -11,7 +12,8 @@
       "version": "0.7.0-alpha2",
       "source": "./",
       "author": {
-        "name": "chenmudu"
+        "name": "Qoder",
+        "email": "dev@qoder.com"
       }
     }
   ]

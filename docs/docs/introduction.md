@@ -33,12 +33,12 @@ one issue at a time.
 Better Harness opens three connected layers, not only a slash-command prompt:
 
 - **Engineering practices** — evidence and judgment guidance across
-  [Session Evidence, Project Harness, Agent Customize, and Loop Engineering](https://github.com/chenmudu/better-harness/blob/main/references/README.md).
+  [Session Evidence, Project Harness, Agent Customize, and Loop Engineering](https://github.com/QoderAI/better-harness/blob/main/references/README.md).
 - **Evaluation model** — the task-centered
   [Agent Work Loop](./concepts/agent-work-loop.md), including evidence states,
   findings, scoring boundaries, and longitudinal validation.
 - **Runnable implementation** — the canonical
-  [`/better-harness` workflow](https://github.com/chenmudu/better-harness/blob/main/skills/better-harness/SKILL.md),
+  [`/better-harness` workflow](https://github.com/QoderAI/better-harness/blob/main/skills/better-harness/SKILL.md),
   evidence collectors, analyzers, renderers, and thin
   [host adapters](./hosts/adapter-matrix.md).
 

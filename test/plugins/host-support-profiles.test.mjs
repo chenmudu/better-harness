@@ -170,7 +170,7 @@ test("known contract gaps remain explicit instead of becoming shell commands", (
   assert.deepEqual(piSession.scopes, ["session"]);
   assert.equal(piSession.defaultScope, "session");
   assert.equal(piSession.lifecycle.install.disposition, "manual");
-  assert.match(piSession.lifecycle.install.steps[0].instruction, /pi -e git:github\.com\/chenmudu\/better-harness/u);
+  assert.match(piSession.lifecycle.install.steps[0].instruction, /pi -e git:github\.com\/QoderAI\/better-harness/u);
   assert.equal(piSession.lifecycle.update.disposition, "not-applicable");
   assert.equal(piSession.lifecycle.remove.disposition, "not-applicable");
 
