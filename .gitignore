@@ -21,6 +21,7 @@ dev/terminal-demo/*.cast
 /.codex/better-harness/
 /harness-readme-compare-evidence/
 /harness-qoder-profile-evidence/
+.research/
 design-qa.md
 
 # Linked AgentReact bundles written by the Artifact Runtime tests.
