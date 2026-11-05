@@ -13,8 +13,14 @@ inherited upstream history.
 ### Added
 
 - ZCode session evidence, configured-asset inventory for user and project
-  `.zcode` roots, and a native `.zcode-plugin/plugin.json` install surface with
-  `.claude-plugin/marketplace.json`.
+  `.zcode` roots, and a native `.zcode-plugin/plugin.json` install surface.
+- A ZCode-only root `marketplace.json`, so `zcode plugins marketplace add`
+  registers the fork without reading `.claude-plugin/marketplace.json`.
+- ZCode asset-practice, Harness report, report-rendering, and evidence-bundle
+  capabilities.
+- HTML and Markdown reports merge an analyzer-owned `summary-facts.json`
+  companion, so session, episode, usage, and learning facts are no longer lost
+  when findings omit them.
 - A read-only ZCode plugin lifecycle profile for `plugin status`, `plan`, and
   `verify`; plans emit typed external steps and never execute host commands.
 

@@ -9,7 +9,8 @@ import {
   hostHomeOptionKeys,
   hostIdsFor,
 } from "../../host-support/index.mjs";
-import { parseArgs } from "../../session-analysis/index.mjs";
+import { parseArgs, parseBooleanFlag } from "../../session-analysis/index.mjs";
+import { writeSummaryFactsOutput } from "../summary-facts-output.mjs";
 import { collectEvidenceBundle } from "./index.mjs";
 
 const EVIDENCE_HOSTS = hostIdsFor(HOST_CAPABILITIES.EVIDENCE_BUNDLE);
@@ -38,6 +39,8 @@ Options:
   --dsh-home <dir>         DeepSeek Harness config root override
   --canvas-out <file>      With Qoder or Cursor, initialize canvas.json from lead facts
   --replace-canvas         Replace that canvas.json when explicitly authorized
+  --summary-out <file>     Write summary-facts.json from the lead summary facts
+  --replace-summary        Replace that summary-facts.json when explicitly authorized
   --format json            JSON only
   --json                   Emit JSON
 `;
@@ -45,7 +48,8 @@ Options:
 const ALLOWED = new Set([
   "workspace", "cwd", "platform", "provider", "language", "depth", "since", "until",
   "evidence-limit", "include-user-home", "include-memories", "canvas-out",
-  "replace-canvas", "format", "json", ...hostHomeOptionKeys(EVIDENCE_HOSTS),
+  "replace-canvas", "summary-out", "replace-summary", "format", "json",
+  ...hostHomeOptionKeys(EVIDENCE_HOSTS),
   "claude-state", "help", "h",
 ]);
 
@@ -73,6 +77,20 @@ export async function main(argv = process.argv.slice(2), dependencies = {}) {
   try {
     assertOptions(command, options);
     const result = await collectEvidenceBundle(options, dependencies);
+    const summaryOut = options["summary-out"];
+    if (summaryOut !== undefined) {
+      const summaryFacts = result?.lead?.data?.summaryFacts;
+      if (!summaryFacts) {
+        throw Object.assign(new Error("evidence bundle has no lead summary facts"), {
+          code: "MISSING_LEAD_SUMMARY_FACTS",
+        });
+      }
+      const summaryReplaced = await writeSummaryFactsOutput(summaryOut, summaryFacts, {
+        replace: parseBooleanFlag(options["replace-summary"]),
+      });
+      result.summaryPath = path.resolve(String(summaryOut));
+      result.summaryReplaced = summaryReplaced;
+    }
     process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
     return result.status === "failed" ? 1 : 0;
   } catch (error) {

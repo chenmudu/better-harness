@@ -1668,7 +1668,7 @@ function taskLoopSummaryFactsErrors(summaryFacts) {
   return errors;
 }
 
-export function taskLoopCanvasFromSummaryFacts(summaryFacts) {
+export function taskLoopSummaryFactsArtifact(summaryFacts) {
   const errors = taskLoopSummaryFactsErrors(summaryFacts);
   if (errors.length > 0) {
     throw Object.assign(new Error(errors.join("; ")), {
@@ -1677,9 +1677,21 @@ export function taskLoopCanvasFromSummaryFacts(summaryFacts) {
     });
   }
   return {
-    schemaVersion: TASK_LOOP_CANVAS_DATA_SCHEMA_VERSION,
+    kind: "better-harness.report-summary-facts",
+    schemaVersion: 1,
     summaryFactsSchemaVersion: TASK_LOOP_SUMMARY_FACTS_CANVAS_SCHEMA_VERSION,
     summary: JSON.parse(JSON.stringify(summaryFacts)),
+    dimensions: [],
+    findings: [],
+  };
+}
+
+export function taskLoopCanvasFromSummaryFacts(summaryFacts) {
+  const artifact = taskLoopSummaryFactsArtifact(summaryFacts);
+  return {
+    schemaVersion: TASK_LOOP_CANVAS_DATA_SCHEMA_VERSION,
+    summaryFactsSchemaVersion: artifact.summaryFactsSchemaVersion,
+    summary: artifact.summary,
     dimensions: [],
     findings: [],
   };

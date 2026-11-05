@@ -35,15 +35,14 @@ Before delegation, collect one versioned evidence bundle per authorized
 provider:
 
 ```text
-<cli> harness evidence-bundle --platform <provider> --workspace <target> --cwd <effective-cwd> --language <locale> --depth <quick|normal> --since <window-start> --until <window-end> --format json [--include-memories] [--include-user-home] [--canvas-out <run-dir>/canvas.json]
+<cli> harness evidence-bundle --platform <provider> --workspace <target> --cwd <effective-cwd> --language <locale> --depth <quick|normal> --since <window-start> --until <window-end> --format json [--include-memories] [--include-user-home] [--canvas-out <run-dir>/canvas.json] [--summary-out <run-dir>/summary-facts.json]
 ```
 
-Use `--canvas-out` only for Qoder/Cursor durable reports. For Qoder, keep the
-default project Memory-title scan; `--include-user-home`
-widens it to authorized global Memory/config and other user assets. For Codex,
-Memory metadata requires `--include-memories`; user/global or installed-Plugin
-metadata requires `--include-user-home`. Apply both when both scopes are
-authorized. Neither flag authorizes Memory bodies.
+Use `--canvas-out` only for Qoder/Cursor; use `--summary-out` for HTML/Markdown
+and keep the companion beside findings. For Qoder, keep the default project
+Memory-title scan; `--include-user-home` widens it to global Memory/config.
+Codex Memory metadata requires `--include-memories`; installed-Plugin metadata
+requires `--include-user-home`. Neither flag authorizes Memory bodies.
 
 It freezes topology, provider, window, depth, limit, and authority. Before
 delegation, read `bundle.context.topology.target`; report `kind`, `route`, and `packageRoute`
@@ -51,10 +50,8 @@ delegation, read `bundle.context.topology.target`; report `kind`, `route`, and `
 `sessionEvidence`, `projectHarness`, `agentCustomize`, and the lead envelope.
 Agent Customize holds bounded `lint`, `inventory`, and `integrity` envelopes
 from one shared asset snapshot. Keep lane/stage status and providers distinct.
-Use the individual `session-analysis facts`, `core-change-watch
-evidence-pack`, `coding-agent-practices asset-baseline`, or `harness analyze`
-command only to diagnose a named unavailable or evidence-loss stage; do not
-substitute diagnostic output into the bundle or rerun all owners. Counts for
+Use the individual diagnostic commands only for a named unavailable or
+evidence-loss stage; never substitute their output into the bundle or rerun all owners. Counts for
 Rules, Skills, MCP, Memory, Agents, Hooks, Commands, Workflows, and Plugins only
 route inspection. Zero or high counts never create findings or scores. A
 normal Qoder report with project Memories blocks when the integrity stage is
@@ -186,10 +183,10 @@ Other providers: <mode>=html; <host-root>=<target>/.<provider>/better-harness
 <cli> harness render --findings <run-dir>/findings.json --mode <mode> --out <host-root> --run-dir <run-dir> --target <target> --validate --json
 ```
 
-Qoder/Cursor analysis owns adjacent `canvas.json`; do not copy its `summaryFacts`
-into findings. HTML keeps analyzer `summaryFacts` verbatim. Succeed only on
-`status: pass` and return the exact paths reported by render. Never hand-write
-Canvas, Markdown, or HTML.
+Qoder/Cursor analysis owns adjacent `canvas.json`; HTML/Markdown merges an
+adjacent `summary-facts.json`. Do not copy `summaryFacts` into findings. Succeed
+only on `status: pass` and return the exact paths reported by render. Never
+hand-write Canvas, Markdown, or HTML.
 
 Finish with one compact sentence: `<count> findings. [Open the report](<renderer-path>).`
 Link the renderer-reported primary report; never return inline-code paths, a

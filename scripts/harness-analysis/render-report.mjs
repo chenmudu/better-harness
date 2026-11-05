@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
 import { existsSync } from "node:fs";
-import { mkdir, mkdtemp, readFile, readdir, realpath, rename, rm, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, mkdtemp, readFile, readdir, realpath, rename, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { HOST_CAPABILITIES, hostIdsFor } from "../host-support/index.mjs";
 import { evaluateHarnessReportQuality } from "./report-quality.mjs";
+import { SUMMARY_FACTS_FILE } from "./summary-facts-output.mjs";
 import { canvasArtifactsFromReportData, readJsonFile, findingsJsonFromReportData, normalizeReportData } from "./report-data-schema.mjs";
 import { repairFindingsJsonData } from "./repair-findings-json.mjs";
 import { allocateRunDir } from "./run-dir.mjs";
@@ -54,6 +55,8 @@ export const RENDER_REPORT_PLATFORMS = Object.freeze([
 const ANALYZER_CANVAS_DATA_FILE_BY_MODE = Object.freeze({
   "qoder-canvas": QODER_CANVAS_DATA_FILE,
   "cursor-canvas": CURSOR_CANVAS_DATA_FILE,
+  html: SUMMARY_FACTS_FILE,
+  markdown: SUMMARY_FACTS_FILE,
 });
 
 const HELP = `Usage: better-harness harness render (--source <report.source.json> | --findings <findings.json>) --mode <qoder-canvas|cursor-canvas|markdown|html> --out <dir> --target <path> [options]
@@ -241,10 +244,15 @@ function checkResult(id, status, errors = [], warnings = [], summary = {}) {
   return { id, status, errors, warnings, summary };
 }
 
+function companionArtifactNames(mode) {
+  return new Set(new Set(["html", "markdown"]).has(mode) ? [SUMMARY_FACTS_FILE] : []);
+}
+
 async function validateArtifacts({ reportData, artifactDir, runDir, artifacts, outputLocation, sdkRoot, sdkDeclarationsPath }) {
   const expectedNames = new Set(artifacts.map((item) => item.name));
+  const allowedCompanions = companionArtifactNames(reportData.mode);
   const actualNames = (await readdir(artifactDir, { withFileTypes: true })).map((entry) => entry.name).sort();
-  const unexpectedNames = actualNames.filter((name) => !expectedNames.has(name));
+  const unexpectedNames = actualNames.filter((name) => !expectedNames.has(name) && !allowedCompanions.has(name));
   const missingNames = [...expectedNames].filter((name) => !actualNames.includes(name));
   const artifactSetErrors = [
     ...missingNames.map((name) => `missing final artifact: ${name}`),
@@ -333,12 +341,12 @@ function artifactNamesForMode(mode) {
   return [];
 }
 
-async function existingArtifactErrors(runDir, expectedNames) {
+async function existingArtifactErrors(runDir, expectedNames, allowedCompanions = new Set()) {
   if (!existsSync(runDir)) return [];
   const expected = new Set(expectedNames);
   const actualNames = (await readdir(runDir, { withFileTypes: true })).map((entry) => entry.name).sort();
   return actualNames
-    .filter((name) => !expected.has(name))
+    .filter((name) => !expected.has(name) && !allowedCompanions.has(name))
     .map((name) => `unexpected run-directory artifact: ${name}`);
 }
 
@@ -383,15 +391,21 @@ export async function renderReport(options) {
   }
   const inputPath = options.sourceData === undefined ? path.resolve(options.source ?? options.findings) : null;
   let rawInput = options.sourceData === undefined ? readJsonFile(inputPath) : options.sourceData;
+  let summaryFactsPath = null;
   if (options.findings && inputPath && isAgentWorkLoopReport(rawInput)) {
     const canvasPath = options.canvas
       ? path.resolve(options.canvas)
       : implicitAnalyzerCanvasPath(options, inputPath);
     if (canvasPath) {
       rawInput = mergeTaskLoopCanvasData(rawInput, readJsonFile(canvasPath));
+      summaryFactsPath = canvasPath;
     }
     rawInput = reconcileTaskLoopFindingLinks(rawInput);
   }
+  const missingSummaryFacts = options.findings !== undefined
+    && new Set(["html", "markdown"]).has(options.mode)
+    && summaryFactsPath === null
+    && rawInput?.summary?.evidenceBoundary === undefined;
   const rawData = options.source || options.sourceData
     ? projectTaskLoopFindings(rawInput, {
         projectName: options.target ? path.basename(path.resolve(options.target)) : "",
@@ -446,7 +460,11 @@ export async function renderReport(options) {
   outputLocation.runDir = runDir;
   const expectedNames = artifactNamesForMode(reportData.mode);
   const artifacts = expectedNames.map((name) => artifact(name, runDir));
-  const existingErrors = await existingArtifactErrors(runDir, expectedNames);
+  const existingErrors = await existingArtifactErrors(
+    runDir,
+    expectedNames,
+    companionArtifactNames(reportData.mode),
+  );
   if (existingErrors.length > 0) {
     const validation = {
       status: "fail",
@@ -468,6 +486,12 @@ export async function renderReport(options) {
   try {
     stageDir = await mkdtemp(path.join(parentDir, `.${path.basename(runDir)}.staging-`));
     await writeArtifacts({ reportData, artifactDir: stageDir, runDir });
+    if (companionArtifactNames(reportData.mode).has(SUMMARY_FACTS_FILE)) {
+      const companion = path.join(runDir, SUMMARY_FACTS_FILE);
+      if (existsSync(companion)) {
+        await copyFile(companion, path.join(stageDir, SUMMARY_FACTS_FILE));
+      }
+    }
     validation = options.validate
       ? await validateArtifacts({
         reportData,
@@ -503,6 +527,14 @@ export async function renderReport(options) {
     language: reportData.language,
     target: reportData.target,
     runDir,
+    summaryFactsPath,
+    ...(missingSummaryFacts
+      ? {
+          warnings: [
+            "MISSING_SUMMARY_FACTS: html/markdown findings have no adjacent summary-facts.json; session, episode, usage, and learning facts fall back to defaults.",
+          ],
+        }
+      : {}),
     outputLocation: {
       requestedOut: outputLocation.requestedOut,
       requestedRunDir: outputLocation.requestedRunDir,

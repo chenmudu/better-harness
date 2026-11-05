@@ -276,7 +276,7 @@ function renderActivity(summary, language) {
     return `<span class="heat-tick${position}" data-date="${escapeHtml(dates[index])}" style="grid-column:${index + 1}">${escapeHtml(dates[index])}</span>`;
   }).join("");
   const heatWidth = Math.max(13, (dates.length * 17) - 4);
-  const coverage = summary?.atAGlance?.coverage ?? {};
+  const coverage = summary?.evidenceBoundary?.episodeCoverage ?? summary?.atAGlance?.coverage ?? {};
   const selection = usage?.selection ?? coverage?.selection ?? {};
   const analyzed = selection.analyzedSessionCount ?? selection.analyzedCount ?? 0;
   const eligible = selection.eligibleSessionCount ?? selection.eligibleCount ?? activity?.sessions?.total ?? 0;

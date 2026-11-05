@@ -20,6 +20,10 @@ project activity and bounded model/Skill usage, compact finding cards with local
 AI-fix copy actions and scoped details, Agent Customize, then evidence and
 methodology. This is semantic parity, not a byte-for-byte host visual clone.
 
+Keep the analyzer-owned `summary-facts.json` beside `findings.json`; `harness
+render` merges it automatically. Do not copy analyzer `summaryFacts` into
+findings or hand-write summary counts.
+
 Use the selected style's primary visual family as the first meaningful visual
 surface. Then mirror the compact Markdown report sections and semantic source
 parts from `report-output.md`: style-selected dimensions or fluency framing,

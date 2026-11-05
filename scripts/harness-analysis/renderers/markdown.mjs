@@ -219,7 +219,7 @@ function readerLearningState(value) {
 function renderTaskLoopMarkdown(source) {
   const glance = source.summary?.atAGlance ?? {};
   const radius = glance.demonstratedAutonomyRadius ?? {};
-  const coverage = glance.coverage ?? {};
+  const coverage = source.summary?.evidenceBoundary?.episodeCoverage ?? glance.coverage ?? {};
   const boundary = source.summary?.evidenceBoundary ?? {};
   const rows = dimensions(source);
   const moves = Array.isArray(glance.priorityMoves) ? glance.priorityMoves : [];

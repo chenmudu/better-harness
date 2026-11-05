@@ -13,11 +13,16 @@ import {
   renderReport,
   resolveReportOutputLocation,
 } from "../../scripts/harness-analysis/render-report.mjs";
+import { analyzeHarnessEvidence } from "../../scripts/harness-analysis/report-run.mjs";
 import { HOST_CAPABILITIES, hostIdsFor } from "../../scripts/host-support/index.mjs";
 import { renderCanvasTsx } from "../../scripts/harness-analysis/renderers/qoder-canvas.mjs";
 import { buildTaskLoopSourceCandidate } from "../../scripts/harness-analysis/task-loop-source.mjs";
 import { applyEpisodeReviews } from "../../scripts/harness-analysis/episode-evidence-review.mjs";
-import { projectTaskLoopFindings } from "../../scripts/harness-analysis/task-loop-report.mjs";
+import {
+  projectTaskLoopFindings,
+  projectTaskLoopReportFacts,
+  taskLoopSummaryFactsArtifact,
+} from "../../scripts/harness-analysis/task-loop-report.mjs";
 
 const cliPath = path.join(process.cwd(), "scripts", "better-harness.mjs");
 const renderPath = path.join(process.cwd(), "scripts", "harness-analysis", "render-report.mjs");
@@ -902,6 +907,98 @@ test("render command finalizes a reviewed task-loop source in one validated step
   });
 });
 
+test("harness analyze writes summary-facts.json from exact summary facts", async () => {
+  await withTempDir("better-harness-summary-analyze-", async (root) => {
+    const summaryPath = path.join(root, "summary-facts.json");
+    const source = reviewedTaskLoopSource();
+    const result = await analyzeHarnessEvidence({
+      workspace: root,
+      platform: "qoder",
+      language: "en",
+      format: "json",
+      sourceInput: source,
+      "summary-out": summaryPath,
+    });
+
+    assert.equal(result.summaryPath, summaryPath);
+    assert.equal(result.summaryReplaced, false);
+    const artifact = JSON.parse(readFileSync(summaryPath, "utf8"));
+    assert.equal(artifact.kind, "better-harness.report-summary-facts");
+    assert.equal(artifact.summary.evidenceBoundary.episodeCoverage.episodeCount,
+      projectTaskLoopReportFacts(source).evidenceBoundary.episodeCoverage.episodeCount);
+  });
+});
+
+test("HTML render merges an adjacent summary-facts.json without model-authored summary facts", async () => {
+  await withTempDir("better-harness-summary-facts-", async (root) => {
+    const source = reviewedTaskLoopSource();
+    const projected = projectTaskLoopFindings(source);
+    const summaryFacts = projectTaskLoopReportFacts(source);
+    const findings = {
+      summary: {
+        projectName: projected.summary.projectName,
+        locale: projected.summary.locale,
+        modelId: projected.summary.modelId,
+        reportContractVersion: projected.summary.reportContractVersion,
+        overview: projected.summary.overview,
+        strengths: [],
+        atAGlance: projected.summary.atAGlance,
+        dimensions: projected.summary.dimensions,
+        aiAgentPractice: projected.summary.aiAgentPractice,
+      },
+      findings: projected.findings,
+    };
+    const runDir = path.join(root, "run");
+    await mkdir(runDir, { recursive: true });
+    await writeJson(path.join(runDir, "findings.json"), findings);
+    await writeJson(path.join(runDir, "summary-facts.json"), taskLoopSummaryFactsArtifact(summaryFacts));
+
+    const result = runNode([
+      renderPath,
+      "--findings", path.join(runDir, "findings.json"),
+      "--mode", "html",
+      "--run-dir", runDir,
+      "--target", root,
+      "--validate",
+      "--json",
+    ]);
+
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    const payload = parseRun(result.stdout);
+    assert.equal(payload.summaryFactsPath, path.join(runDir, "summary-facts.json"));
+    assert.equal(payload.warnings, undefined);
+    const markdown = readFileSync(path.join(runDir, "report.md"), "utf8");
+    const coverage = summaryFacts.evidenceBoundary.episodeCoverage;
+    assert.match(markdown, new RegExp(`Episode coverage: ${coverage.episodeCount} episodes`, "u"));
+    assert.match(
+      markdown,
+      new RegExp(`${summaryFacts.evidenceBoundary.manifest.selection.analyzedCount} sessions analyzed`, "u"),
+    );
+  });
+});
+
+test("HTML render warns when findings have no summary facts companion", async () => {
+  await withTempDir("better-harness-summary-facts-missing-", async (root) => {
+    const runDir = path.join(root, "run");
+    await mkdir(runDir, { recursive: true });
+    await writeJson(path.join(runDir, "findings.json"), sampleFindings());
+
+    const result = runNode([
+      renderPath,
+      "--findings", path.join(runDir, "findings.json"),
+      "--mode", "html",
+      "--run-dir", runDir,
+      "--target", root,
+      "--validate",
+      "--json",
+    ]);
+
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    const payload = parseRun(result.stdout);
+    assert.ok(payload.warnings.some((warning) => /MISSING_SUMMARY_FACTS/u.test(warning)));
+  });
+});
+
 test("render command rejects extra artifacts in a canonical Canvas run directory", async () => {
   await withTempDir("better-harness-source-inside-run-", async (root) => {
     const runDir = path.join(root, "run");
@@ -1375,6 +1472,7 @@ test("render routes html output by host id and fails closed on unknown platforms
 test("render platform allowlist follows report-rendering capability rather than session support", () => {
   assert.deepEqual([...RENDER_REPORT_PLATFORMS], hostIdsFor(HOST_CAPABILITIES.REPORT_RENDERING));
   assert.equal(RENDER_REPORT_PLATFORMS.includes("dsh"), true);
+  assert.equal(RENDER_REPORT_PLATFORMS.includes("zcode"), true);
 });
 
 test("HTML relative action metadata carries the finding's current repair revision", () => {

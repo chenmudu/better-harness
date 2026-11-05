@@ -16,6 +16,7 @@ import { resolveConfiguredCwd } from "../workspace-topology/index.mjs";
 import { formatHarnessEvidence } from "./evidence-brief.mjs";
 import { validateHarnessReportSource } from "./report-source/index.mjs";
 import { projectTaskLoopReportFacts, taskLoopCanvasFromSummaryFacts } from "./task-loop-report.mjs";
+import { writeSummaryFactsOutput } from "./summary-facts-output.mjs";
 import { createTaskLoopSourceFromSessions } from "./task-loop-source.mjs";
 
 export const HARNESS_ANALYSIS_EVIDENCE_SCHEMA_VERSION = 1;
@@ -37,6 +38,8 @@ Options:
   --format <text|json>     Plain-text evidence or evidence plus exact summary facts (default: text)
   --canvas-out <file>      With Qoder or Cursor JSON output, initialize canvas.json from exact summary facts
   --replace-canvas         Replace that exact canvas.json when overwrite was explicitly authorized
+  --summary-out <file>     Write summary-facts.json from the same exact summary facts
+  --replace-summary        Replace that exact summary-facts.json when explicitly authorized
   --include-global-capabilities
                            Include authorized user/global capability metadata
 `;
@@ -66,7 +69,7 @@ function flagEnabled(value) {
 
 function assertCliOptions(options) {
   const allowed = new Set([
-    "workspace", "cwd", "platform", "language", "since", "until", "format", "canvas-out", "replace-canvas", "include-global-capabilities",
+    "workspace", "cwd", "platform", "language", "since", "until", "format", "canvas-out", "replace-canvas", "summary-out", "replace-summary", "include-global-capabilities",
     ...hostHomeOptionKeys(REPORT_PLATFORMS),
   ]);
   const positional = Array.isArray(options._) ? options._ : [];
@@ -136,6 +139,8 @@ export async function analyzeHarnessEvidence(options = {}) {
   const format = options.format ?? "text";
   const requestedCanvasOut = options["canvas-out"] ?? options.canvasOut;
   const replaceCanvas = flagEnabled(options["replace-canvas"] ?? options.replaceCanvas);
+  const requestedSummaryOut = options["summary-out"] ?? options.summaryOut;
+  const replaceSummary = flagEnabled(options["replace-summary"] ?? options.replaceSummary);
   if (!new Set(["text", "json"]).has(format)) {
     throw Object.assign(new Error(`unsupported analyze format: ${format}`), {
       code: "UNSUPPORTED_ANALYZE_FORMAT",
@@ -144,6 +149,16 @@ export async function analyzeHarnessEvidence(options = {}) {
   if (requestedCanvasOut && format !== "json") {
     throw Object.assign(new Error("--canvas-out requires --format json"), {
       code: "CANVAS_OUTPUT_REQUIRES_JSON",
+    });
+  }
+  if (requestedSummaryOut && format !== "json") {
+    throw Object.assign(new Error("--summary-out requires --format json"), {
+      code: "SUMMARY_OUTPUT_REQUIRES_JSON",
+    });
+  }
+  if (replaceSummary && !requestedSummaryOut) {
+    throw Object.assign(new Error("--replace-summary requires --summary-out"), {
+      code: "SUMMARY_REPLACE_REQUIRES_OUTPUT",
     });
   }
   if (requestedCanvasOut && !new Set(["qoder", "cursor"]).has(platform)) {
@@ -189,13 +204,20 @@ export async function analyzeHarnessEvidence(options = {}) {
   if (format === "text") return evidence;
   const summaryFacts = projectTaskLoopReportFacts(source);
   const canvasPath = requestedCanvasOut ? path.resolve(String(requestedCanvasOut)) : null;
+  const summaryPath = requestedSummaryOut ? path.resolve(String(requestedSummaryOut)) : null;
   let canvasReplaced = false;
+  let summaryReplaced = false;
   if (canvasPath) {
     canvasReplaced = await writeCanvasOutput(
       canvasPath,
       taskLoopCanvasFromSummaryFacts(summaryFacts),
       { replace: replaceCanvas },
     );
+  }
+  if (summaryPath) {
+    summaryReplaced = await writeSummaryFactsOutput(summaryPath, summaryFacts, {
+      replace: replaceSummary,
+    });
   }
   return {
     kind: "better-harness.harness-analysis-evidence",
@@ -204,6 +226,7 @@ export async function analyzeHarnessEvidence(options = {}) {
     summaryFacts,
     ...(sourceResult.sessionBinding ? { sessionBinding: sourceResult.sessionBinding } : {}),
     ...(canvasPath ? { canvasPath, canvasReplaced } : {}),
+    ...(summaryPath ? { summaryPath, summaryReplaced } : {}),
   };
 }
 
