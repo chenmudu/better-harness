@@ -129,7 +129,7 @@
         "plugins uninstall <plugin> [--scope <user|project>] [--keep-data] [--force]",
         "plugins list [--json] [--available]"
       ],
-      "isolatedSmoke": "A local Better Harness checkout was registered and installed into temporary HOME/USERPROFILE/ZCODE_HOME; plugins list --json reported better-harness@better-harness version 0.7.0-alpha2 with 2 skills, and disable/enable/update/uninstall succeeded."
+      "isolatedSmoke": "A local Better Harness checkout was registered and installed into temporary HOME/USERPROFILE/ZCODE_HOME; plugins list --json reported better-harness@better-harness version 0.7.0-alpha2 with 2 skills and manifestPath .zcode-plugin/plugin.json, and disable/enable/update/uninstall succeeded."
     }
   }
 }

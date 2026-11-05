@@ -146,14 +146,15 @@ the target journey, contract, evidence, governance, and DX-measurement system.
   capability, or skill-local owner. Promote shared prose only for two visible
   workflow consumers; do not create a generic detector or signal umbrella.
 - Keep `.claude-plugin/`, `.qoder-plugin/`, `.cursor-plugin/`,
-  `.codex-plugin/`, `.agents/skills/`, and future host shells thin: they expose,
+  `.codex-plugin/`, `.zcode-plugin/`, `.agents/skills/`, and future host shells
+  thin: they expose,
   wrap, mirror, or package canonical behavior; they do not own product judgment.
   The Claude Code shell owns native install/discovery metadata and exposes the
   canonical root skills; Claude configured-asset and session evidence remain
   in the capability-owned agent-customize and session-analysis providers. The Codex shell
   owns local install/discovery metadata only; Codex evidence collection remains
   in the capability-owned provider and session-analysis modules. The public npm
-  package ships all eight plugin metadata roots, including the DeepSeek Harness
+  package ships all current plugin metadata roots, including the DeepSeek Harness
   Cordis bundle shell under `.dsh-plugin/`, while the Qoder runtime bundle
   includes only `.qoder-plugin/`.
 

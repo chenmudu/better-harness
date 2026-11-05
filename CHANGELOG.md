@@ -13,7 +13,8 @@ inherited upstream history.
 ### Added
 
 - ZCode session evidence, configured-asset inventory for user and project
-  `.zcode` roots, and a minimal native marketplace install surface.
+  `.zcode` roots, and a native `.zcode-plugin/plugin.json` install surface with
+  `.claude-plugin/marketplace.json`.
 - A read-only ZCode plugin lifecycle profile for `plugin status`, `plan`, and
   `verify`; plans emit typed external steps and never execute host commands.
 

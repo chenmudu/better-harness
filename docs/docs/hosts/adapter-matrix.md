@@ -46,7 +46,7 @@ remains the complete capability-level source of truth.
 | WorkBuddy | Adapter support | Analysis-capable source-local host | None; skills use WorkBuddy-owned paths | Workspace-matching WorkBuddy JSONL transcripts | Self-contained HTML + Markdown |
 | Grok | Adapter support | Analysis-capable source-local host | None; skills use Grok-owned paths | Workspace-matching Grok session dirs (`updates.jsonl`) | Self-contained HTML + Markdown |
 | DeepSeek Harness (DSH) | Verified install/discovery | Qualified headless/base and Web `standard`/`code`/`cordis`; shared read-only analysis over partial configured-assets and session evidence | `.dsh-plugin/cordis.patch.yml` Cordis bundle shell plus the local DSH Cordis policy; no lifecycle shell | DSH JSONL backend session format `0`: raw `.jsonl` and feature-detected `.jsonl.zstd` | Self-contained HTML + Markdown |
-| ZCode | Adapter support | Read-only sessions, configured assets, and CLI plugin lifecycle; no report route or desktop plugin surface | `.claude-plugin/` (native fallback) | Read-only SQLite sessions from `~/.zcode/cli/db/db.sqlite`; workspace from `session.directory`, soft-deleted sessions excluded, parent/task subagents retained | Session evidence only |
+| ZCode | Adapter support | Read-only sessions, configured assets, and CLI plugin lifecycle; no report route or desktop plugin surface | `.zcode-plugin/` | Read-only SQLite sessions from `~/.zcode/cli/db/db.sqlite`; workspace from `session.directory`, soft-deleted sessions excluded, parent/task subagents retained | Session evidence only |
 
 The `@qoder-ai/better-harness` npm package includes all eight plugin metadata
 roots; `.dsh-plugin/` is the DeepSeek Harness Cordis bundle shell, installed by
@@ -294,8 +294,8 @@ stripped with diagnostics. Project hooks are reported as configured and
 trust-gated, never as trusted; live MCP status, runtime subagents, and
 same-name runtime precedence remain unsupported.
 
-The minimum install surface reuses `.claude-plugin/plugin.json` and
-`.claude-plugin/marketplace.json`. Maintainers can run:
+The minimum install surface ships the native `.zcode-plugin/plugin.json` and
+uses `.claude-plugin/marketplace.json`. Maintainers can run:
 
 ```bash
 zcode plugins marketplace add <path-or-repository> --scope user

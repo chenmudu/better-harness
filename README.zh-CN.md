@@ -13,7 +13,7 @@
 - **ZCode 会话证据**：只读的 `zcode-v1` SQLite 适配器。
 - **ZCode 配置资产**：用户级与项目级 `.zcode`、`.agents`、插件、MCP、hooks；
   不输出 secret 和完整 hook 命令。
-- **ZCode 安装**：原生 marketplace，复用 `.claude-plugin/`。
+- **ZCode 安装**：原生 `.zcode-plugin/plugin.json` + `.claude-plugin/marketplace.json`。
 - **ZCode 生命周期**：`plugin status/plan/verify` 只读；计划不会执行宿主命令。
 
 在 ZCode 中安装本分叉：
@@ -27,7 +27,8 @@ zcode plugins install better-harness@better-harness --scope user
 
 其他宿主与能力与上游一致。请使用
 [上游 README](https://github.com/QoderAI/better-harness#readme)，并把 marketplace
-源指向本仓库。
+源指向本仓库。交互式 Inspector 示例见
+[上游项目](https://qoderai.github.io/better-harness/inspector)。
 
 ## 许可证
 

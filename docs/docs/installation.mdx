@@ -412,8 +412,8 @@ zcode plugins list --json
 ```
 
 The output should include `better-harness@better-harness` with two skills and
-an enabled state. Better Harness reuses `.claude-plugin/plugin.json` and
-`.claude-plugin/marketplace.json`; no `.zcode-plugin` shell is required.
+an enabled state. Better Harness ships the native `.zcode-plugin/plugin.json`
+and uses `.claude-plugin/marketplace.json`.
 
 Better Harness can observe the local installation and plan native steps without
 running them:

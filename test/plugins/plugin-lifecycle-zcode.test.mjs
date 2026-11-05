@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { test } from "vitest";
 
 import { getHostProfile, getHostSurface, validateHostProfiles } from "../../scripts/host-support/index.mjs";
@@ -210,4 +212,18 @@ test("ZCode plans refuse an isolated host home it cannot bind", async () => {
   });
   assert.equal(plan.state, "blocked");
   assert.ok(plan.blockers.some((item) => item.code === "ISOLATED_HOST_HOME_UNREPRESENTABLE"));
+});
+
+test("repository ships the native ZCode plugin manifest", async () => {
+  const repoRoot = fileURLToPath(new URL("../..", import.meta.url));
+  const [zcode, claude, pkg] = await Promise.all([
+    readFile(path.join(repoRoot, ".zcode-plugin", "plugin.json"), "utf8").then(JSON.parse),
+    readFile(path.join(repoRoot, ".claude-plugin", "plugin.json"), "utf8").then(JSON.parse),
+    readFile(path.join(repoRoot, "package.json"), "utf8").then(JSON.parse),
+  ]);
+  assert.equal(zcode.name, "better-harness");
+  assert.equal(zcode.version, pkg.version);
+  for (const key of ["name", "version", "description", "license"]) {
+    assert.equal(zcode[key], claude[key], key);
+  }
 });

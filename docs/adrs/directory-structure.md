@@ -47,6 +47,9 @@ Legend:
 .codex-plugin/                         # [active] thin Codex shell
   plugin.json                          # thin discovery/install metadata only
 
+.zcode-plugin/                         # [active] native ZCode shell
+  plugin.json                          # thin discovery/install metadata only
+
 .dsh-plugin/                           # [active] thin DeepSeek Harness shell
   cordis.patch.yml                     # Cordis bundle layer: one row, pointers only
 
@@ -247,7 +250,7 @@ Use the tree first. These rules resolve common collisions:
 - Shared workflows go to root `skills/`; host-local wrappers or generated
   mirrors go to `.agents/skills/`.
 - Host plugin directories such as `.claude-plugin/`, `.qoder-plugin/`,
-  `.cursor-plugin/`, `.codex-plugin/`, and `.github/plugin/` are
+  `.cursor-plugin/`, `.codex-plugin/`, `.zcode-plugin/`, and `.github/plugin/` are
   install/discovery shells for one host. Existing active shells may be
   hand-maintained narrowly, but the Qoder
   public npm package ships all eight plugin metadata roots, while the Qoder

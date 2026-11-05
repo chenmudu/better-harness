@@ -309,8 +309,8 @@ zcode plugins list --json
 ```
 
 输出中应包含 `better-harness@better-harness`，带两个 Skill 且状态为 enabled。
-Better Harness 复用 `.claude-plugin/plugin.json` 与
-`.claude-plugin/marketplace.json`，不需要额外的 `.zcode-plugin` 壳。
+Better Harness 提供原生 `.zcode-plugin/plugin.json`，并使用
+`.claude-plugin/marketplace.json`。
 
 Better Harness 可以观察本地安装并规划原生步骤，但不执行：
 

@@ -300,6 +300,7 @@ test("Codex host plugin artifact is isolated and portable", async () => {
       ".idea",
       ".qoder",
       ".qoder-plugin",
+      ".zcode-plugin",
       "benchmark",
       "dev",
       "test",

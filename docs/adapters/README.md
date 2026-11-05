@@ -49,7 +49,7 @@ project `.kimi-code/skills/`), then runs `/skill:better-harness`.
 | WorkBuddy | Analysis-capable source-local host | none (skills install into `~/.workbuddy/skills`) | `scripts/agent-customize/providers/workbuddy.mjs` | `scripts/session-analysis/platforms/workbuddy.mjs` | self-contained HTML + Markdown | `~/.workbuddy` `AGENTS.md` + identity files + `.agents` + `AGENTS.md` | `session-analysis --platform workbuddy sources` -> validated `html` render |
 | Grok | Analysis-capable source-local host | none (skills install into `~/.grok/skills`) | `scripts/agent-customize/providers/grok.mjs` | `scripts/session-analysis/platforms/grok.mjs` | self-contained HTML + Markdown | `~/.grok` + `.grok` + `.agents` + `AGENTS.md` | `session-analysis --platform grok sources` -> skill symlink -> validated `html` render |
 | DeepSeek Harness (DSH) | Verified install/discovery for headless/base and Web `standard`/`code`/`cordis`; shared read-only analysis over developer-preview configured and Session evidence | `.dsh-plugin/cordis.patch.yml` host shell (one Cordis bundle row naming `scripts/dsh-skill-discovery/bundle.mjs`, which loads the local policy at `scripts/dsh-skill-discovery/index.mjs`); no lifecycle shell | `scripts/agent-customize/providers/dsh.mjs`; filesystem Skills and cwd-sensitive Instructions, configured-not-observed | `scripts/session-analysis/platforms/dsh.mjs`; `dsh-v1` for the audited format-0 session-evidence slice from DSH `dsh-v0.1.0-rc.7` and `dsh-v0.1.0-rc.8`, raw `.jsonl` and feature-detected `.jsonl.zstd` | self-contained HTML + Markdown | canonical Skill from the complete root; model Skill calls rejected | `dsh plugin --profile <name> add @qoder-ai/better-harness` -> `npm run test:dsh-bundle`; `npm run test:dsh-native`; `npm run test:dsh-configured-assets-native`; validated portable `html` render and native output-root inertness |
-| ZCode | Analysis-capable source-local host | `.claude-plugin/` (native fallback) | `scripts/agent-customize/providers/zcode.mjs` | `scripts/session-analysis/platforms/zcode.mjs`; `zcode-v1` read-only SQLite evidence from `~/.zcode/cli/db/db.sqlite`; workspace from `session.directory`, soft-deleted sessions excluded, parent/task subagents retained | Session evidence only | `~/.zcode` + `~/.agents` + project `.zcode`/`.agents` + `AGENTS.md`; project hooks reported configured/trust-gated only | `zcode plugins marketplace add <source> --scope user` -> `zcode plugins install better-harness@better-harness` -> configured-asset inventory -> `plugin status/verify --host zcode` |
+| ZCode | Analysis-capable source-local host | `.zcode-plugin/` | `scripts/agent-customize/providers/zcode.mjs` | `scripts/session-analysis/platforms/zcode.mjs`; `zcode-v1` read-only SQLite evidence from `~/.zcode/cli/db/db.sqlite`; workspace from `session.directory`, soft-deleted sessions excluded, parent/task subagents retained | Session evidence only | `~/.zcode` + `~/.agents` + project `.zcode`/`.agents` + `AGENTS.md`; project hooks reported configured/trust-gated only | `zcode plugins marketplace add <source> --scope user` -> `zcode plugins install better-harness@better-harness` -> configured-asset inventory -> `plugin status/verify --host zcode` |
 
 ## Read-only Plugin Lifecycle
 
@@ -332,9 +332,10 @@ edit host settings, or register an `apply` path.
   subagents, and plugin records/contributions. Project config is read through
   ZCode's allowlist; project `storage`/`permission`/`network`/`plugins.dirs`
   are stripped with diagnostics, and project hooks are reported as
-  configured/trust-gated, never as trusted. The minimum install surface reuses
-  `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`; the native
-  lifecycle profile exposes install/update/remove/verify as external, read-only
+  configured/trust-gated, never as trusted. The minimum install surface ships
+  the native `.zcode-plugin/plugin.json` and uses
+  `.claude-plugin/marketplace.json`; the native lifecycle profile exposes
+  install/update/remove/verify as external, read-only
   plans and never executes them. ZCode still has no Checkup, Canvas, report
   route, Studio, desktop plugin surface, or public Quickstart claim.
 

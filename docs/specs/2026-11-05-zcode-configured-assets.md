@@ -21,7 +21,7 @@ ZCode 的 Session Evidence 已由 [2026-11-05-zcode-session-evidence.md](2026-11
 | Session Evidence | Available | 由既有 ZCode session spec 覆盖，本 spec 不改变其 claim |
 | Plugin Lifecycle | Available（status/plan/verify 只读） | 见 [2026-11-05-zcode-plugin-lifecycle.md](2026-11-05-zcode-plugin-lifecycle.md)；BH 只观察和规划，不执行 ZCode 命令 |
 | Hook Trust Decision | Unavailable | 固定报告 configured/enabled/trust-gated；不调用 `zcode hooks trust status`，不声称 `trusted` |
-| Shell / Install | Available（最小原生 marketplace 安装） | 复用 `.claude-plugin` manifest 与 marketplace；在隔离 HOME 中验证，见安装指南 |
+| Shell / Install | Available（最小原生 marketplace 安装） | 原生 `.zcode-plugin/plugin.json` + `.claude-plugin/marketplace.json`；在隔离 HOME 中验证，见安装指南 |
 | Checkup | Unavailable | 不把 ZCode 加入 Checkup 宿主集合 |
 | Checkup | Unavailable | 不把 ZCode 加入 Checkup 宿主集合 |
 | Canvas / Output | Existing generic paths only | 复用现有 inventory/manage 输出；不新增 ZCode 专属渲染 |

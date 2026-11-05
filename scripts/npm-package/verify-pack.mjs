@@ -60,6 +60,7 @@ function verifyReleaseVersionAlignment() {
     [".github/plugin/marketplace.json", readJson(".github/plugin/marketplace.json").plugins?.[0]?.version],
     ["qwen-extension.json", readJson("qwen-extension.json").version],
     [".kimi-plugin/plugin.json", readJson(".kimi-plugin/plugin.json").version],
+    [".zcode-plugin/plugin.json", readJson(".zcode-plugin/plugin.json").version],
   ];
   for (const [source, version] of versions) {
     if (version !== packageVersion) {
@@ -146,6 +147,7 @@ const required = [
   "package/.github/plugin/plugin.json",
   "package/.github/plugin/marketplace.json",
   "package/.qoder-plugin/plugin.json",
+  "package/.zcode-plugin/plugin.json",
   "package/.kimi-plugin/plugin.json",
   "package/.dsh-plugin/cordis.patch.yml",
   "package/scripts/dsh-skill-discovery/bundle.mjs",

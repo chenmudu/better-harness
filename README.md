@@ -17,7 +17,8 @@ under the [MIT License](LICENSE).
 - **ZCode session evidence**: read-only `zcode-v1` SQLite adapter.
 - **ZCode configured assets**: user and project `.zcode`, `.agents`, plugins,
   MCP, hooks, with secrets and full hook commands removed.
-- **ZCode install**: native marketplace, reusing `.claude-plugin/`.
+- **ZCode install**: native `.zcode-plugin/plugin.json` plus
+  `.claude-plugin/marketplace.json`.
 - **ZCode lifecycle**: `plugin status/plan/verify`, read-only; plans never
   execute host commands.
 
@@ -32,7 +33,8 @@ zcode plugins install better-harness@better-harness --scope user
 
 Other hosts and capabilities are unchanged from upstream. Use the
 [upstream README](https://github.com/QoderAI/better-harness#readme) and point the
-marketplace source at this repository.
+marketplace source at this repository. For the interactive Inspector sample, see
+the [upstream project](https://qoderai.github.io/better-harness/inspector).
 
 ## License
 

@@ -29,7 +29,7 @@ Contract fixture: `test/fixtures/plugin-lifecycle/native-help-contracts.v1.json#
 | Item | Value | Boundary |
 | --- | --- | --- |
 | Surface | `zcode/cli` | Only the CLI surface is declared. Desktop plugin settings were not proven to read the same store, so no desktop surface is claimed. |
-| Distribution | marketplace | Better Harness ships `.claude-plugin/plugin.json` + `.claude-plugin/marketplace.json`; no `.zcode-plugin` shell is required. |
+| Distribution | marketplace | Better Harness ships the native `.zcode-plugin/plugin.json` + `.claude-plugin/marketplace.json`. ZCode prefers `.zcode-plugin` over the `.claude-plugin`/`.codex-plugin` fallbacks. |
 | Observation | inventory | Installed records plus user `plugins.dirs` inline plugins collected by the ZCode agent-customize provider. |
 | Inventory homes | `--zcode-home` / `~/.zcode`; `zcodeUserHome` / `~` | Both routes bind to `--host-home` during status. |
 | Install home binding | none | ZCode CLI resolves `~/.zcode/cli` through `homedir()` and exposes no config-root env override; plans with `--host-home` are blocked instead of guessing. |

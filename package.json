@@ -53,6 +53,7 @@
     ".dsh-plugin/",
     ".github/plugin/",
     ".qoder-plugin/",
+    ".zcode-plugin/",
     ".kimi-plugin/",
     "qwen-extension.json",
     "AGENTS.md",

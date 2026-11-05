@@ -54,6 +54,7 @@ const FORBIDDEN_TOP_LEVEL = new Set([
   ".idea",
   ".qoder",
   ".qoder-plugin",
+  ".zcode-plugin",
   "benchmark",
   "dev",
   "outputs",
