@@ -131,7 +131,10 @@ export const HOST_DESCRIPTORS = Object.freeze([
   descriptor({
     id: "zcode",
     displayName: "ZCode",
-    capabilities: [HOST_CAPABILITIES.SESSION_ANALYSIS],
+    capabilities: [
+      HOST_CAPABILITIES.SESSION_ANALYSIS,
+      HOST_CAPABILITIES.AGENT_CUSTOMIZE,
+    ],
     sessionScopeTokens: [".zcode", "zcode"],
   }),
 ]);

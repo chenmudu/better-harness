@@ -8,6 +8,7 @@ import { collectKimiCustomizeInventory } from "./kimi.mjs";
 import { collectQoderCustomizeInventory } from "./qoder.mjs";
 import { collectQwenCustomizeInventory } from "./qwen.mjs";
 import { collectWorkbuddyCustomizeInventory } from "./workbuddy.mjs";
+import { collectZcodeCustomizeInventory } from "./zcode.mjs";
 import { HOST_CAPABILITIES, hostIdsFor } from "../../host-support/index.mjs";
 
 async function collectDshCustomizeInventory(options) {
@@ -35,6 +36,7 @@ export const PROVIDER_COLLECTORS = new Map([
   ["workbuddy", collectWorkbuddyCustomizeInventory],
   ["grok", collectGrokCustomizeInventory],
   ["dsh", collectDshCustomizeInventory],
+  ["zcode", collectZcodeCustomizeInventory],
 ]);
 
 export const SUPPORTED_CUSTOMIZE_PROVIDERS = hostIdsFor(HOST_CAPABILITIES.AGENT_CUSTOMIZE);
