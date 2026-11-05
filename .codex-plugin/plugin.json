@@ -3,12 +3,10 @@
   "version": "0.7.0-alpha2",
   "description": "Build an AI-ready engineering system for safe coding-agent delivery and continuous software improvement.",
   "author": {
-    "name": "Qoder",
-    "email": "dev@qoder.com",
-    "url": "https://qoder.com/"
+    "name": "chenmudu"
   },
-  "homepage": "https://github.com/QoderAI/better-harness",
-  "repository": "https://github.com/QoderAI/better-harness",
+  "homepage": "https://github.com/chenmudu/better-harness",
+  "repository": "https://github.com/chenmudu/better-harness",
   "license": "MIT",
   "keywords": [
     "qoder-plugin",
@@ -23,7 +21,7 @@
     "displayName": "Better Harness",
     "shortDescription": "Evaluate and improve coding-agent delivery readiness.",
     "longDescription": "Use the Better Harness skill to analyze repositories, agent workflows, host assets, guardrails, validation habits, and self-improvement signals for AI delivery readiness.",
-    "developerName": "Qoder",
+    "developerName": "chenmudu",
     "category": "Coding",
     "capabilities": [
       "Interactive",
@@ -35,9 +33,7 @@
       "Draft a repair plan for a Harness finding.",
       "Analyze this project's coding-agent workflow."
     ],
-    "websiteURL": "https://github.com/QoderAI/better-harness",
-    "privacyPolicyURL": "https://qoder.com/en/privacy-policy",
-    "termsOfServiceURL": "https://qoder.com/product-service",
+    "websiteURL": "https://github.com/chenmudu/better-harness",
     "brandColor": "#0F766E",
     "screenshots": []
   }

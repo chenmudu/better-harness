@@ -17,7 +17,7 @@ Better Harness 当前声明了十个能力层宿主适配器，其中六个已�
 证据边界与这六个宿主不同。ZCode 以适配器支持展示：只读会话证据、已配置资产、
 最小原生安装面和只读 CLI 插件生命周期，但不含报告渲染路由或桌面插件 surface，
 且生命周期 plan 需要 `zcode` 在 `PATH` 上。完整能力层事实源仍是
-[规范适配器矩阵](https://github.com/QoderAI/better-harness/blob/main/docs/adapters/README.md)。
+[规范适配器矩阵](https://github.com/chenmudu/better-harness/blob/main/docs/adapters/README.md)。
 
 ## 受支持的宿主适配器
 
@@ -159,12 +159,12 @@ Skill 且为 enabled。`plugin status/plan/verify --host zcode` 只观察本地�
 各宿主的能力刻意保持差异：没有真实证据源的宿主不会声称具备某项能力，
 不受支持的行为会在读取私有数据或修改文件之前失败。逐能力的覆盖表、
 TODO 列表和完成定义维护在仓库
-[roadmap](https://github.com/QoderAI/better-harness/blob/main/roadmap.md) 中。
+[roadmap](https://github.com/chenmudu/better-harness/blob/main/roadmap.md) 中。
 
 ## 事实源
 
 规范矩阵、发现规则和拆分触发条件见
-[`docs/adapters/README.md`](https://github.com/QoderAI/better-harness/blob/main/docs/adapters/README.md)。
+[`docs/adapters/README.md`](https://github.com/chenmudu/better-harness/blob/main/docs/adapters/README.md)。
 
 ## 贡献新的宿主
 

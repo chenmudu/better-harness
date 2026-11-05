@@ -27,7 +27,7 @@ install/discovery for a qualified runtime/preset boundary plus developer-preview
 configured-assets and session-evidence contracts. It supports shared read-only
 Asset Practices, neutral Harness analysis, Evidence Bundles, and qualified
 portable HTML durable output. The
-[canonical adapter matrix](https://github.com/QoderAI/better-harness/blob/main/docs/adapters/README.md)
+[canonical adapter matrix](https://github.com/chenmudu/better-harness/blob/main/docs/adapters/README.md)
 remains the complete capability-level source of truth.
 
 ## Supported host adapters
@@ -224,7 +224,7 @@ explicit inline/no-files operation remains write-free. Checkup, Canvas, Studio,
 and public Quickstart support remain unavailable.
 Repository contributors can run the pinned credential-free comparison with
 `npm run test:dsh-configured-assets-native`. See
-[DeepSeek Harness Configured Assets](https://github.com/QoderAI/better-harness/blob/main/references/agent-customize/platforms/dsh.md).
+[DeepSeek Harness Configured Assets](https://github.com/chenmudu/better-harness/blob/main/references/agent-customize/platforms/dsh.md).
 
 Separately, DSH has a developer-preview JSONL session slice with Better Harness
 adapter metadata `dsh-v1`. Its format-0 session-evidence slice is
@@ -264,7 +264,7 @@ Session sources, Skills, Instructions, or configuration/state. Better
 Harness-owned `findings.json`, `report.md`, and `report.html` remain managed
 under `<target>/.dsh/better-harness` by the generic portable publication and
 rollback contract. See the
-[canonical source matrix](https://github.com/QoderAI/better-harness/blob/main/docs/adapters/README.md)
+[canonical source matrix](https://github.com/chenmudu/better-harness/blob/main/docs/adapters/README.md)
 and [Story #93](https://github.com/QoderAI/better-harness/issues/93).
 
 ### ZCode {#zcode}
@@ -315,12 +315,12 @@ Capabilities differ per host on purpose: no host claims a capability without a
 real evidence source, and unsupported behavior fails before reading private
 data or changing files. The maintained capability-by-capability coverage
 table, TODO list, and definition of done live in the repository
-[roadmap](https://github.com/QoderAI/better-harness/blob/main/roadmap.md).
+[roadmap](https://github.com/chenmudu/better-harness/blob/main/roadmap.md).
 
 ## Source of truth
 
 The canonical matrix, discovery rules, and split triggers live in
-[`docs/adapters/README.md`](https://github.com/QoderAI/better-harness/blob/main/docs/adapters/README.md).
+[`docs/adapters/README.md`](https://github.com/chenmudu/better-harness/blob/main/docs/adapters/README.md).
 
 ## Contributing another host
 

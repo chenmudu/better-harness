@@ -59,6 +59,7 @@ test("Better Harness identity matching rejects display-name-only candidates", ()
   assert.equal(matchesBetterHarnessPlugin({ name: "@qoder-ai/better-harness", piPackageSource: "npm:@qoder-ai/better-harness" }, getHostProfile("pi")), true);
   assert.equal(matchesBetterHarnessPlugin({ id: "better-harness" }, profile), true);
   assert.equal(matchesBetterHarnessPlugin({ remotePluginId: "git+ssh://git@github.com/QoderAI/better-harness.git#main" }, profile), true);
+  assert.equal(matchesBetterHarnessPlugin({ remotePluginId: "git+ssh://git@github.com/chenmudu/better-harness.git#main" }, profile), true);
 });
 
 test("status covers every host and preserves WorkBuddy as unsupported", async () => {
@@ -453,7 +454,7 @@ test("install plans are deterministic, typed, and perform no implicit update", a
   assert.equal(first.effects, "none");
   assert.equal(first.state, "ready");
   assert.deepEqual(first.steps[0].argv, [
-    "qwen", "extensions", "install", "QoderAI/better-harness", "--scope", "project",
+    "qwen", "extensions", "install", "chenmudu/better-harness", "--scope", "project",
   ]);
   assert.equal(first.steps.every((step) => step.effects === "external"), true);
   assert.equal(first.steps.every((step) => step.externalImpact === "host-plugin-state"), true);
@@ -462,7 +463,7 @@ test("install plans are deterministic, typed, and perform no implicit update", a
   assert.equal(first.recovery.length, 3);
   assert.deepEqual(first.target.expectedSource, {
     pluginId: "better-harness",
-    repository: "QoderAI/better-harness",
+    repository: "chenmudu/better-harness",
   });
 
   const installed = await buildPluginLifecyclePlan({
@@ -611,7 +612,7 @@ test("Pi session plans preserve the transient -e lifecycle boundary", async () =
   assert.equal(install.observed[0].installation, "session-only");
   assert.equal(install.steps.length, 1);
   assert.equal(install.steps[0].kind, "manual");
-  assert.match(install.steps[0].instruction, /pi -e git:github\.com\/QoderAI\/better-harness/u);
+  assert.match(install.steps[0].instruction, /pi -e git:github\.com\/chenmudu\/better-harness/u);
   assert.equal(install.steps[0].cwd, undefined);
 
   for (const action of ["update", "remove"]) {

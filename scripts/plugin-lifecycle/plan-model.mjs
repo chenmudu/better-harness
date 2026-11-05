@@ -405,7 +405,7 @@ export function createPluginLifecyclePlan({ action, profile, surface, scope, wor
     ...(hostHome ? { hostHome } : {}),
     expectedSource: {
       pluginId: profile.identity.nativeIds[0],
-      repository: "QoderAI/better-harness",
+      repository: "chenmudu/better-harness",
     },
   };
   const transition = transitionFor({

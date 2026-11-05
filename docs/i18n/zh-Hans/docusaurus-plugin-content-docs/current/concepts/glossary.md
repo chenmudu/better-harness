@@ -67,4 +67,4 @@ sidebar_position: 3
 | 规范负责目录 | 唯一拥有某行为产品判断的目录；宿主 shell 和镜像都指回它。 |
 
 带负责方链接的完整术语表见
-[`docs/glossary.md`](https://github.com/QoderAI/better-harness/blob/main/docs/glossary.md)。
+[`docs/glossary.md`](https://github.com/chenmudu/better-harness/blob/main/docs/glossary.md)。

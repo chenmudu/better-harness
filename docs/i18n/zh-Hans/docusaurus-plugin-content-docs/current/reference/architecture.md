@@ -48,4 +48,4 @@ Better Harness 使用
 ## 事实源
 
 目录路由、模板归属和规范负责目录规则见
-[`docs/ARCHITECTURE.md`](https://github.com/QoderAI/better-harness/blob/main/docs/ARCHITECTURE.md)。
+[`docs/ARCHITECTURE.md`](https://github.com/chenmudu/better-harness/blob/main/docs/ARCHITECTURE.md)。

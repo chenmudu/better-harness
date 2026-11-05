@@ -12,10 +12,10 @@ as long as partial and unavailable coverage stays explicit.
 
 The complete, canonical workflow lives in the repository:
 
-- [New Coding Agent contribution guide](https://github.com/QoderAI/better-harness/blob/main/docs/adapters/contributing-new-coding-agent.md)
-- [Repository agent instructions](https://github.com/QoderAI/better-harness/blob/main/AGENTS.md)
-- [Community extension map](https://github.com/QoderAI/better-harness/blob/main/docs/community.md)
-- [Architecture principles](https://github.com/QoderAI/better-harness/blob/main/docs/ARCHITECTURE.md)
+- [New Coding Agent contribution guide](https://github.com/chenmudu/better-harness/blob/main/docs/adapters/contributing-new-coding-agent.md)
+- [Repository agent instructions](https://github.com/chenmudu/better-harness/blob/main/AGENTS.md)
+- [Community extension map](https://github.com/chenmudu/better-harness/blob/main/docs/community.md)
+- [Architecture principles](https://github.com/chenmudu/better-harness/blob/main/docs/ARCHITECTURE.md)
 
 ## Define the support boundary first
 

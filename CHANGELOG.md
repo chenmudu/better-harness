@@ -20,6 +20,8 @@ inherited upstream history.
 
 ### Changed
 
+- Host manifests, lifecycle plan repository targets, and this repository's
+  documentation links now point at `chenmudu/better-harness`.
 - README now presents this repository as an independent fork maintained by
   chenmudu and points install commands at `chenmudu/better-harness`.
 - Adapter documentation now describes ZCode session, configured-asset, install,

@@ -8,11 +8,10 @@
     "shortDescription": "AI delivery readiness reviews and continuous software improvement"
   },
   "author": {
-    "name": "Qoder",
-    "email": "dev@qoder.com"
+    "name": "chenmudu"
   },
-  "homepage": "https://github.com/QoderAI/better-harness",
-  "repository": "https://github.com/QoderAI/better-harness",
+  "homepage": "https://github.com/chenmudu/better-harness",
+  "repository": "https://github.com/chenmudu/better-harness",
   "license": "MIT",
   "keywords": [
     "skills",

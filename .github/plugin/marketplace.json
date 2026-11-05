@@ -1,8 +1,7 @@
 {
   "name": "better-harness",
   "owner": {
-    "name": "Qoder",
-    "email": "dev@qoder.com"
+    "name": "chenmudu"
   },
   "metadata": {
     "description": "Better Harness plugins for AI delivery readiness.",
@@ -15,11 +14,10 @@
       "version": "0.7.0-alpha2",
       "source": "./",
       "author": {
-        "name": "Qoder",
-        "email": "dev@qoder.com"
+        "name": "chenmudu"
       },
-      "homepage": "https://github.com/QoderAI/better-harness",
-      "repository": "https://github.com/QoderAI/better-harness",
+      "homepage": "https://github.com/chenmudu/better-harness",
+      "repository": "https://github.com/chenmudu/better-harness",
       "license": "MIT",
       "skills": "./skills/"
     }

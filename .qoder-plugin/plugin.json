@@ -5,12 +5,11 @@
   "description": "Build an AI-ready engineering system for safe coding-agent delivery and continuous software improvement.",
   "descriptionZh": "构建面向 AI 的工程体系，让编码智能体安全地理解、变更、评审、报告并持续改进软件。",
   "author": {
-    "name": "Qoder",
-    "email": "dev@qoder.com",
-    "url": "https://qoder.com/"
+    "name": "chenmudu",
+    "url": "https://github.com/chenmudu"
   },
-  "homepage": "https://github.com/QoderAI/better-harness",
-  "repository": "https://github.com/QoderAI/better-harness",
+  "homepage": "https://github.com/chenmudu/better-harness",
+  "repository": "https://github.com/chenmudu/better-harness",
   "license": "MIT",
   "keywords": [
     "qoder-plugin",

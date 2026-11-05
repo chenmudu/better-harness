@@ -63,6 +63,6 @@ later result can prove the loop improved.
 ## Going deeper
 
 - One-page overview:
-  [`docs/concepts.md`](https://github.com/QoderAI/better-harness/blob/main/docs/concepts.md)
+  [`docs/concepts.md`](https://github.com/chenmudu/better-harness/blob/main/docs/concepts.md)
 - Model routing and advanced lenses:
-  [`models/routing.md`](https://github.com/QoderAI/better-harness/blob/main/models/routing.md)
+  [`models/routing.md`](https://github.com/chenmudu/better-harness/blob/main/models/routing.md)

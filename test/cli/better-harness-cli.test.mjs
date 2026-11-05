@@ -487,7 +487,7 @@ test("plugin plan emits typed argv without executing it", async () => {
   assert.equal(payload.status, "ok");
   assert.equal(payload.data.effects, "none");
   assert.deepEqual(payload.data.steps[0].argv, [
-    "qwen", "extensions", "install", "QoderAI/better-harness", "--scope", "project",
+    "qwen", "extensions", "install", "chenmudu/better-harness", "--scope", "project",
   ]);
   assert.equal(payload.data.steps[0].externalImpact, "host-plugin-state");
   assert.equal(payload.data.steps[0].preconditions.length, 2);

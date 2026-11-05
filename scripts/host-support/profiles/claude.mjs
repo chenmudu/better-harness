@@ -32,7 +32,7 @@ export default defineHostProfile({
     lifecycle: {
       install: operation("supported", [
         hostCommand(
-          "/plugin marketplace add QoderAI/better-harness",
+          "/plugin marketplace add chenmudu/better-harness",
           "The Better Harness marketplace is registered.",
         ),
         shell(

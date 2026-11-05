@@ -4,17 +4,16 @@
   "description": "Build an AI-ready engineering system for safe coding-agent delivery and continuous software improvement.",
   "license": "MIT",
   "author": {
-    "name": "Qoder",
-    "email": "dev@qoder.com",
-    "url": "https://qoder.com/"
+    "name": "chenmudu",
+    "url": "https://github.com/chenmudu"
   },
-  "homepage": "https://github.com/QoderAI/better-harness#readme",
+  "homepage": "https://github.com/chenmudu/better-harness#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/QoderAI/better-harness.git"
+    "url": "git+https://github.com/chenmudu/better-harness.git"
   },
   "bugs": {
-    "url": "https://github.com/QoderAI/better-harness/issues"
+    "url": "https://github.com/chenmudu/better-harness/issues"
   },
   "keywords": [
     "coding-agent",

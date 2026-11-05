@@ -29,13 +29,13 @@ AI 编码智能体改代码很快，但围绕它的工作流往往才是薄弱�
 Better Harness 开放的是三个相互连接的层，而不只是一个斜杠命令提示词：
 
 - **工程实践** —— 覆盖
-  [Session Evidence、Project Harness、Agent Customize 和 Loop Engineering](https://github.com/QoderAI/better-harness/blob/main/references/README.md)
+  [Session Evidence、Project Harness、Agent Customize 和 Loop Engineering](https://github.com/chenmudu/better-harness/blob/main/references/README.md)
   的证据与判断指南。
 - **评估模型** —— 以任务为中心的
   [Agent Work Loop](./concepts/agent-work-loop.md)，包括证据状态、发现、
   评分边界和纵向验证。
 - **可运行实现** —— 规范的
-  [`/better-harness` 工作流](https://github.com/QoderAI/better-harness/blob/main/skills/better-harness/SKILL.md)、
+  [`/better-harness` 工作流](https://github.com/chenmudu/better-harness/blob/main/skills/better-harness/SKILL.md)、
   证据收集器、分析器、渲染器和轻量的[宿主适配层](./hosts/adapter-matrix.md)。
 
 三层共享同一条边界：已配置的资产只能证明某个机制存在，只有关联的任务证据
