@@ -310,7 +310,7 @@ edit host settings, or register an `apply` path.
   publication contract. See
   [Story #93](https://github.com/QoderAI/better-harness/issues/93)
   and the [dated support specification](../specs/2026-08-18-93-deepseek-harness-session-evidence.md).
-- ZCode has a session-evidence-only adapter at
+- ZCode has a session evidence adapter at
   `scripts/session-analysis/platforms/zcode.mjs` with adapter metadata
   `zcode-v1`. It reads one SQLite database, resolved as `--zcode-db` over
   `<--zcode-home>/cli/db/db.sqlite` over `~/.zcode/cli/db/db.sqlite`, through

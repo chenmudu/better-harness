@@ -269,7 +269,8 @@ and [Story #93](https://github.com/QoderAI/better-harness/issues/93).
 
 ### ZCode {#zcode}
 
-ZCode support is intentionally limited to read-only local Session evidence.
+ZCode support covers read-only local Session evidence, configured assets, a
+minimal native install surface, and a read-only CLI plugin lifecycle.
 `session-analysis --platform zcode` reads a single SQLite database, resolved as
 `--zcode-db` over `<--zcode-home>/cli/db/db.sqlite` over
 `~/.zcode/cli/db/db.sqlite`, through `node:sqlite` opened read-only with

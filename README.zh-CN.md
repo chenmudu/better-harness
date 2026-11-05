@@ -35,7 +35,7 @@
 不同宿主的入口并不完全相同，请直接使用对应章节给出的命令。
 
 本 README 仅内联展示最常用宿主的安装步骤。其余受支持的宿主（Qwen Code、Pi、
-Kimi Code、WorkBuddy 与 Grok）的步骤与边界保留在
+Kimi Code、WorkBuddy、Grok 与 ZCode）的步骤与边界保留在
 [安装指南](docs/docs/installation.mdx)和[公开宿主适配矩阵](docs/docs/hosts/adapter-matrix.md)中；
 参见[更多适配器](#更多适配器)。README 中的排布只是展示选择，并不代表支持等级。
 
@@ -363,8 +363,8 @@ Copilot 不记录逐次响应的 token 用量，VS Code Copilot Chat 也没有�
 
 ### 更多适配器
 
-除上述宿主外，Better Harness 还支持 Qwen Code、Pi、Kimi Code、WorkBuddy 与
-Grok。它们确切的安装、调用与证据边界都放在文档里，以保持本 README 精简：
+除上述宿主外，Better Harness 还支持 Qwen Code、Pi、Kimi Code、WorkBuddy、
+Grok 与 ZCode。它们确切的安装、调用与证据边界都放在文档里，以保持本 README 精简：
 
 - **Qwen Code** —— [安装指南](docs/docs/installation.mdx#qwen-code)
   （`qwen extensions install QoderAI/better-harness`）。
@@ -376,9 +376,12 @@ Grok。它们确切的安装、调用与证据边界都放在文档里，以保�
   （`.kimi-plugin/plugin.json` 插件安装）。
 - **WorkBuddy** —— [宿主适配器矩阵](docs/docs/hosts/adapter-matrix.md#workbuddy)。
 - **Grok** —— [宿主适配器矩阵](docs/docs/hosts/adapter-matrix.md#grok)。
+- **ZCode** —— [宿主适配器矩阵](docs/docs/hosts/adapter-matrix.md#zcode)
+  （只读会话、配置资产与 CLI 插件生命周期；无报告路由）。
 
-它们都产出自包含的 `report.html` 及配套的 `report.md` 与 `findings.json`；
-缺失或不完整的会话证据会被明确标注。
+除 ZCode 外，它们都产出自包含的 `report.html` 及配套的 `report.md` 与
+`findings.json`；缺失或不完整的会话证据会被明确标注。ZCode 仅提供只读会话证据、
+配置资产与生命周期计划，不产出报告。
 
 <a id="develop-and-package-from-source"></a>
 

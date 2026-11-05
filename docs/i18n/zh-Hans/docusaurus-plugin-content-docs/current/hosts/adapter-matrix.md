@@ -120,8 +120,9 @@ Grok 的已配置资产、工作区匹配的会话证据与可移植 HTML 路由
 
 ### ZCode {#zcode}
 
-ZCode 支持刻意限制为本地只读会话证据。`session-analysis --platform zcode`
-读取单个 SQLite 数据库，优先级为 `--zcode-db` > `<--zcode-home>/cli/db/db.sqlite`
+ZCode 支持包含本地只读会话证据、配置资产、最小原生安装面与只读 CLI 插件生命周期。
+`session-analysis --platform zcode` 读取单个 SQLite 数据库，优先级为
+`--zcode-db` > `<--zcode-home>/cli/db/db.sqlite`
 > `~/.zcode/cli/db/db.sqlite`，通过 `node:sqlite` 以只读模式打开并设置
 `PRAGMA query_only = ON`。发现阶段排除软删除会话（`time_deleted`），工作区
 只从 `session.directory` 判定，并保留 `parent_id`/`task_type` 子代理关联。
