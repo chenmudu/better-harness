@@ -3,7 +3,28 @@
 This file records notable public changes to Better Harness. Entries describe
 observable behavior and compatibility, not every internal refactor.
 
-## Unreleased
+## Fork maintenance - 2026-11-05
+
+This repository is maintained independently by chenmudu and diverges from
+[QoderAI/better-harness](https://github.com/QoderAI/better-harness) at
+`0.7.0-alpha2`. Entries in this section describe the fork. Later sections are
+inherited upstream history.
+
+### Added
+
+- ZCode session evidence, configured-asset inventory for user and project
+  `.zcode` roots, and a minimal native marketplace install surface.
+- A read-only ZCode plugin lifecycle profile for `plugin status`, `plan`, and
+  `verify`; plans emit typed external steps and never execute host commands.
+
+### Changed
+
+- README now presents this repository as an independent fork maintained by
+  chenmudu and points install commands at `chenmudu/better-harness`.
+- Adapter documentation now describes ZCode session, configured-asset, install,
+  and lifecycle boundaries.
+
+## Upstream Unreleased (inherited)
 
 ### Added
 

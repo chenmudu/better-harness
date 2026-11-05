@@ -1,5 +1,7 @@
 # Better Harness 产品规划 2026
 
+> **分叉说明：** 本文继承自上游项目，不代表 chenmudu 维护版本的计划与优先级。
+
 > 来源：`better-harness-产品规划-20260911.html`（正文更新至 2026-09-12）。
 > 本文是该规划稿的结构化转写，不合并、不参照 [roadmap.md](roadmap.md)（英文
 > Evolution Roadmap，按证据链组织）；两份文档视角不同，互相独立。

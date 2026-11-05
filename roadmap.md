@@ -1,5 +1,8 @@
 # Better Harness Evolution Roadmap
 
+> **Fork note:** this roadmap is inherited from the original project and does not
+> define the priorities of the chenmudu fork.
+
 References: [Architecture](docs/ARCHITECTURE.md) ·
 [Agent Work Loop](models/agent-work-loop.md) ·
 [Loop Engineering](references/loop-engineering/README.md) ·
